@@ -33,4 +33,33 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 20, actual.length
     assert_instance_of Invoice, actual.sample
   end
+
+  def test_it_can_find_invoice_by_id
+    id = 13
+
+    assert_instance_of Invoice, invoice_repo.find_by_id(id)
+    assert_equal id, invoice_repo.find_by_id(id).id
+  end
+
+  def test_returns_nil_for_invalid_id
+    id = "2412341234"
+
+    assert_nil invoice_repo.find_by_id(id)
+  end
+
+  def test_it_can_find_all_items_by_customer_id
+    actual = invoice_repo.find_all_by_customer_id(2)
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert_equal 4, actual.length
+  end
+
+  def test_it_can_find_all_items_by_merchant_id
+    actual = invoice_repo.find_all_by_merchant_id(12336965)
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert_equal 1, actual.length
+  end
 end
