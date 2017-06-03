@@ -63,4 +63,8 @@ class SalesAnalyst
       (item.unit_price - average_average_price_per_merchant) > (2 * std_dev)
     end
   end
+
+  def average_invoices_per_merchant
+    (engine.invoices.all.count.to_f / engine.merchants.all.count).round(2)
+  end
 end
