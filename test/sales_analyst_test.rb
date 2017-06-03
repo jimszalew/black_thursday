@@ -107,4 +107,19 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
   end
+
+  def test_it_knows_merchants_with_low_invoice_count
+    csv_paths = {
+                        :items     => "./data/items.csv",
+                        :merchants => "./data/merchants.csv",
+                        :invoices => "./data/invoices.csv"
+                      }
+    engine = SalesEngine.from_csv(csv_paths)
+    analyst_2 = SalesAnalyst.new(engine)
+
+    actual = analyst_2.bottom_merchants_by_invoice_count
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+  end
 end

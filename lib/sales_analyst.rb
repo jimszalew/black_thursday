@@ -79,7 +79,14 @@ class SalesAnalyst
   def top_merchants_by_invoice_count
     std_dev = average_invoices_per_merchant_standard_deviation
     engine.merchants.all.find_all do |merchant|
-      (merchant.invoices.count - average_invoices_per_merchant) > (std_dev)
+      (merchant.invoices.count - average_invoices_per_merchant) > (2 * std_dev)
+    end
+  end
+
+  def bottom_merchants_by_invoice_count
+    std_dev = average_invoices_per_merchant_standard_deviation
+    engine.merchants.all.find_all do |merchant|
+      (merchant.invoices.count - average_invoices_per_merchant) < (-2 * std_dev)
     end
   end
 end
