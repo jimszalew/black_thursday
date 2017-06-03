@@ -126,4 +126,8 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_calculate_average_invoices_per_day
     assert_equal 2.86, analyst_2.average_invoices_per_day
   end
+
+  def test_it_can_find_standard_deviation_of_invoices_created_per_day
+    assert_equal 2.12, analyst_2.invoices_per_day_standard_deviation
+  end
 end

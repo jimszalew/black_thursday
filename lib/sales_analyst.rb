@@ -93,4 +93,12 @@ class SalesAnalyst
   def average_invoices_per_day
     (engine.invoices.all.count / 7.0).round(2)
   end
+
+  def invoices_per_day_standard_deviation
+    sos = engine.invoices_by_weekday.values.reduce(0) do |sum, value|
+      sum + (value - average_invoices_per_day)**2
+    end
+    variance = sos / (6)
+    (Math.sqrt(variance)).round(2)
+  end
 end
