@@ -41,4 +41,8 @@ class InvoiceRepository
       invoice.status == status
     end
   end
+
+  def merchant_by_invoice(merchant_id)
+    engine.merchant_by_invoice(merchant_id)
+  end
 end

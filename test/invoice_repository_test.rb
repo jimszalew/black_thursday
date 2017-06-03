@@ -75,10 +75,17 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 9, actual.length
+    assert_equal 10, actual.length
   end
 
   def test_it_knows_about_parent_sales_engine
     assert_instance_of SalesEngine, invoice_repo.engine
+  end
+
+  def test_it_can_get_merchant_by_invoice
+    actual = invoice_repo.merchant_by_invoice(12334112)
+
+    assert_instance_of Merchant, actual
+    assert_equal 12334112, actual.id
   end
 end
