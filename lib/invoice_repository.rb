@@ -1,7 +1,8 @@
 require_relative 'invoice'
 
 class InvoiceRepository
-  attr_reader :invoices
+  attr_reader :invoices,
+              :engine
   def initialize(csv, engine)
     @invoices = {}
     @engine = engine
@@ -39,5 +40,9 @@ class InvoiceRepository
     all.find_all do |invoice|
       invoice.status == status
     end
+  end
+
+  def merchant_by_invoice(merchant_id)
+    engine.merchant_by_invoice(merchant_id)
   end
 end

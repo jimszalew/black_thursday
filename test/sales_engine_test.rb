@@ -80,4 +80,11 @@ class SalesEngineTest < Minitest::Test
     assert_equal 2, actual.count
     assert_equal 12335955, actual.sample.merchant_id
   end
+
+  def test_it_can_get_merchant_by_invoice
+    actual = se.merchant_by_invoice(12334112)
+
+    assert_instance_of Merchant, actual
+    assert_equal 12334112, actual.id
+  end
 end

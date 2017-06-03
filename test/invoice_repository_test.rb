@@ -2,13 +2,20 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'csv'
 require_relative '../lib/invoice_repository'
+require_relative "../lib/sales_engine"
 
 class InvoiceRepositoryTest < Minitest::Test
   attr_reader :invoice_repo
   def setup
-    engine = Object.new
+    small_csv_paths = {
+                        :items     => "./test/data/small_item_set.csv",
+                        :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv"
+                      }
+    engine = SalesEngine.from_csv(small_csv_paths)
     csv = CSV.open './test/data/medium_invoice_set.csv', headers: true, header_converters: :symbol
-    @invoice_repo = InvoiceRepository.new(csv, engine)
+    # @invoice_repo = InvoiceRepository.new(csv, engine)
+    @invoice_repo = engine.invoices
   end
 
   def test_it_exists_and_populates_invoices_automatically
@@ -68,6 +75,17 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 9, actual.length
+    assert_equal 10, actual.length
+  end
+
+  def test_it_knows_about_parent_sales_engine
+    assert_instance_of SalesEngine, invoice_repo.engine
+  end
+
+  def test_it_can_get_merchant_by_invoice
+    actual = invoice_repo.merchant_by_invoice(12334112)
+
+    assert_instance_of Merchant, actual
+    assert_equal 12334112, actual.id
   end
 end
