@@ -92,4 +92,19 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_calculate_standard_deviation_for_average_invoice_per_merchant
     assert_equal 1.0, analyst_2.average_invoices_per_merchant_standard_deviation
   end
+
+  def test_it_knows_merchants_with_high_invoice_count
+    csv_paths = {
+                        :items     => "./data/items.csv",
+                        :merchants => "./data/merchants.csv",
+                        :invoices => "./data/invoices.csv"
+                      }
+    engine = SalesEngine.from_csv(csv_paths)
+    analyst_2 = SalesAnalyst.new(engine)
+
+    actual = analyst_2.top_merchants_by_invoice_count
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+  end
 end

@@ -75,4 +75,11 @@ class SalesAnalyst
     variance = sos / (engine.merchants.all.count - 1)
     (Math.sqrt(variance)).round(2)
   end
+
+  def top_merchants_by_invoice_count
+    std_dev = average_invoices_per_merchant_standard_deviation
+    engine.merchants.all.find_all do |merchant|
+      (merchant.invoices.count - average_invoices_per_merchant) > (std_dev)
+    end
+  end
 end
