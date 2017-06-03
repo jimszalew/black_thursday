@@ -19,4 +19,8 @@ class Invoice
     @updated_at = Time.parse(data[:updated_at])
     @repository = repository
   end
+
+  def merchant
+    repository.merchant_by_invoice(merchant_id)
+  end
 end

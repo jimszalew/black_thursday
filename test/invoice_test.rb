@@ -7,7 +7,7 @@ class InvoiceTest < Minitest::Test
   attr_reader :invoice
   def setup
     small_csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
+                        :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
                         :invoices => "./test/data/medium_invoice_set.csv"
                       }
@@ -17,7 +17,7 @@ class InvoiceTest < Minitest::Test
     @invoice = Invoice.new({
                             :id => "17",
                             :customer_id => "5",
-                            :merchant_id => "12334912",
+                            :merchant_id => "12334112",
                             :status => "pending",
                             :created_at => "2005-06-03",
                             :updated_at => "2015-07-01"
@@ -37,7 +37,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_knows_its_merchant_id
-    assert_equal 12334912, invoice.merchant_id
+    assert_equal 12334112, invoice.merchant_id
   end
 
   def test_it_has_a_status
@@ -51,5 +51,12 @@ class InvoiceTest < Minitest::Test
 
   def test_it_knows_about_parent_repo
     assert_instance_of InvoiceRepository, invoice.repository
+  end
+
+  def test_it_can_get_its_merchant
+    actual = invoice.merchant
+
+    assert_instance_of Merchant, actual
+    assert_equal 12334112, actual.id
   end
 end
