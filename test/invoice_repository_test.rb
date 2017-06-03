@@ -27,4 +27,10 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Invoice, invoice_repo.invoices[random_invoice_key]
   end
+
+  def test_it_can_return_all_invoice_instances
+    actual = invoice_repo.all
+    assert_equal 20, actual.length
+    assert_instance_of Invoice, actual.sample
+  end
 end
