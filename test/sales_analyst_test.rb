@@ -130,4 +130,12 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_find_standard_deviation_of_invoices_created_per_day
     assert_equal 2.12, analyst_2.invoices_per_day_standard_deviation
   end
+
+  def test_it_can_find_top_days_by_invoice_count
+    actual = analyst_2.top_days_by_invoice_count
+
+    assert_instance_of Array, actual
+    assert_instance_of String, actual.sample
+    assert_equal 2, actual.count
+  end
 end

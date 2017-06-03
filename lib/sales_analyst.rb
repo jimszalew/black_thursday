@@ -101,4 +101,13 @@ class SalesAnalyst
     variance = sos / (6)
     (Math.sqrt(variance)).round(2)
   end
+
+  def top_days_by_invoice_count
+    std_dev = invoices_per_day_standard_deviation
+    inv_by_day = engine.invoices_by_weekday
+    
+    inv_by_day.keys.find_all do |day|
+      (inv_by_day[day] - average_invoices_per_day) > std_dev
+    end
+  end
 end
