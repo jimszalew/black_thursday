@@ -71,4 +71,13 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Merchant, actual
     assert_equal 12334113, actual.id
   end
+
+  def test_it_can_return_all_invoices_for_a_merchant
+    actual = se.all_merchant_invoices(12335955)
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert_equal 2, actual.count
+    assert_equal 12335955, actual.sample.merchant_id
+  end
 end

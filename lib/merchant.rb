@@ -13,4 +13,8 @@ class Merchant
   def items
     repository.all_merchant_items(id)
   end
+
+  def invoices
+    repository.all_merchant_invoices(id)
+  end
 end

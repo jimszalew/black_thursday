@@ -16,12 +16,13 @@ class MerchantTest < Minitest::Test
     small_csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv"
                       }
     engine = SalesEngine.from_csv(small_csv_paths)
     csv  = CSV.open './test/data/merchant_sample.csv', headers: true, header_converters: :symbol
     repo = MerchantRepository.new(csv, engine)
     @merchant = Merchant.new({:id => 1, :name => "StarCityGames"}, repo)
-    @merchant2 = Merchant.new({:id => 2, :name => "Amazong"},repo)
+    @merchant2 = Merchant.new({:id => 12335955, :name => "Amazong"},repo)
     @merchant3 = Merchant.new({:id => 12334213, :name => "Sal's Sassafras Supply"},repo)
   end
 
@@ -39,7 +40,7 @@ class MerchantTest < Minitest::Test
   end
 
   def test_it_can_have_different_id
-    assert_equal 2, merchant2.id
+    assert_equal 12335955, merchant2.id
   end
 
   def test_it_can_have_different_name
@@ -58,5 +59,14 @@ class MerchantTest < Minitest::Test
     assert_instance_of Item, actual.sample
     assert_equal 2, actual.count
     assert_equal 12334213, actual.sample.merchant_id
+  end
+
+  def test_it_can_get_all_its_invoices
+    actual = merchant2.invoices
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert_equal 2, actual.count
+    assert_equal 12335955, actual.sample.merchant_id
   end
 end
