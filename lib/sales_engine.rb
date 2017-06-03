@@ -41,4 +41,16 @@ class SalesEngine
   def merchant_by_invoice(merchant_id)
     merchants.find_by_id(merchant_id.to_s)
   end
+
+  def invoices_by_weekday
+    days = {}
+    invoices.all.each do |invoice|
+      if days.has_key?(invoice.created_at.strftime('%A'))
+        days[invoice.created_at.strftime('%A')] += 1
+      else
+        days[invoice.created_at.strftime('%A')] = 1
+      end
+    end
+    days
+  end
 end
