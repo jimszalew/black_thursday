@@ -138,4 +138,10 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of String, actual.sample
     assert_equal 2, actual.count
   end
+
+  def test_it_knows_percentage_of_invoices_by_status
+    assert_equal 5.0, analyst_2.invoice_status(:returned)
+    assert_equal 45.0, analyst_2.invoice_status(:pending)
+    assert_equal 50.0, analyst_2.invoice_status(:shipped)
+  end
 end
