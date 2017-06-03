@@ -40,18 +40,7 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_calculate_standard_deviation_for_average_items_per_merchant
-    # item_dummy = CSV.open './data/items.csv', headers: true, header_converters: :symbol
-    # merch_dummy = CSV.open './data/merchants.csv', headers: true, header_converters: :symbol
-    csv_paths = {
-                        :items     => "./data/items.csv",
-                        :merchants => "./data/merchants.csv",
-                        :invoices => "./data/invoices.csv"
-                      }
-    engine  = SalesEngine.from_csv(csv_paths)
-    analyst_2 = SalesAnalyst.new(engine)
-
-
-    assert_equal 3.26, analyst_2.average_items_per_merchant_standard_deviation
+    assert_equal 1.39, analyst_2.average_items_per_merchant_standard_deviation
   end
 
   def test_it_knows_merchants_with_high_item_count
@@ -98,5 +87,9 @@ class SalesAnalystTest < Minitest::Test
   def test_it_can_find_average_invoices_per_merchant
     assert_equal 4.0, analyst.average_invoices_per_merchant
     assert_equal 1.0, analyst_2.average_invoices_per_merchant
+  end
+
+  def test_it_can_calculate_standard_deviation_for_average_invoice_per_merchant
+    assert_equal 1.0, analyst_2.average_invoices_per_merchant_standard_deviation
   end
 end
