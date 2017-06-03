@@ -53,4 +53,16 @@ class SalesEngine
     end
     days
   end
+
+  def invoices_by_status
+    status = {}
+    invoices.all.each do |invoice|
+      if status.has_key?(invoice.status.to_sym)
+        status[invoice.status.to_sym] += 1
+      else
+        status[invoice.status.to_sym] = 1
+      end
+    end
+    status
+  end
 end
