@@ -63,4 +63,55 @@ class SalesAnalyst
       (item.unit_price - average_average_price_per_merchant) > (2 * std_dev)
     end
   end
+
+  def average_invoices_per_merchant
+    (engine.invoices.all.count.to_f / engine.merchants.all.count).round(2)
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    sos = engine.merchants.all.reduce(0) do |sum, merchant|
+      sum + (merchant.invoices.count - average_invoices_per_merchant)**2
+    end
+    variance = sos / (engine.merchants.all.count - 1)
+    (Math.sqrt(variance)).round(2)
+  end
+
+  def top_merchants_by_invoice_count
+    std_dev = average_invoices_per_merchant_standard_deviation
+    engine.merchants.all.find_all do |merchant|
+      (merchant.invoices.count - average_invoices_per_merchant) > (2 * std_dev)
+    end
+  end
+
+  def bottom_merchants_by_invoice_count
+    std_dev = average_invoices_per_merchant_standard_deviation
+    engine.merchants.all.find_all do |merchant|
+      (merchant.invoices.count - average_invoices_per_merchant) < (-2 * std_dev)
+    end
+  end
+
+  def average_invoices_per_day
+    (engine.invoices.all.count / 7.0).round(2)
+  end
+
+  def invoices_per_day_standard_deviation
+    sos = engine.invoices_by_weekday.values.reduce(0) do |sum, value|
+      sum + (value - average_invoices_per_day)**2
+    end
+    variance = sos / (6)
+    (Math.sqrt(variance)).round(2)
+  end
+
+  def top_days_by_invoice_count
+    std_dev = invoices_per_day_standard_deviation
+    inv_by_day = engine.invoices_by_weekday
+
+    inv_by_day.keys.find_all do |day|
+      (inv_by_day[day] - average_invoices_per_day) > std_dev
+    end
+  end
+
+  def invoice_status(status)
+    (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
+  end
 end
