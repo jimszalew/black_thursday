@@ -122,4 +122,8 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
   end
+
+  def test_it_can_calculate_average_invoices_per_day
+    assert_equal 2.86, analyst_2.average_invoices_per_day
+  end
 end

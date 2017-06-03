@@ -89,4 +89,8 @@ class SalesAnalyst
       (merchant.invoices.count - average_invoices_per_merchant) < (-2 * std_dev)
     end
   end
+
+  def average_invoices_per_day
+    (engine.invoices.all.count / 7.0).round(2)
+  end
 end
