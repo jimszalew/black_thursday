@@ -92,6 +92,7 @@ class SalesEngineTest < Minitest::Test
     expected = {"Saturday"=>5, "Friday"=>6, "Wednesday"=>1,
                 "Monday"=>4, "Sunday"=>1, "Tuesday"=>2,
                 "Thursday"=>1}
+              
     actual = se.invoices_by_weekday
 
     assert_equal expected, actual
