@@ -11,6 +11,7 @@ class MerchantRepositoryTest < Minitest::Test
     small_csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv"
                       }
     engine = SalesEngine.from_csv(small_csv_paths)
     csv = CSV.open('./test/data/merchant_sample.csv', headers: true, header_converters: :symbol)
@@ -73,5 +74,14 @@ class MerchantRepositoryTest < Minitest::Test
     assert_instance_of Item, actual.sample
     assert_equal 2, actual.count
     assert_equal 12334213, actual.sample.merchant_id
+  end
+
+  def test_it_can_return_all_invoices_from_parent_sales_engine
+    actual = merch_repo.all_merchant_invoices(12335955)
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert_equal 2, actual.count
+    assert_equal 12335955, actual.sample.merchant_id
   end
 end
