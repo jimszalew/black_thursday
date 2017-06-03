@@ -112,6 +112,7 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-    (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
+     percentage = (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
+     percentage.round(2)
   end
 end
