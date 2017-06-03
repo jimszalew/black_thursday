@@ -2,11 +2,18 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/invoice'
 # require_relative '../lib/invoice_repository'
-# require_relative '../lib/sales_engine'
+require_relative '../lib/sales_engine'
 class InvoiceTest < Minitest::Test
   attr_reader :invoice
   def setup
-    repository = Object.new
+    small_csv_paths = {
+                        :items     => "./test/data/small_item_set.csv",
+                        :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv"
+                      }
+    engine = SalesEngine.from_csv(small_csv_paths)
+    csv  = CSV.open './test/data/small_item_set.csv', headers: true, header_converters: :symbol
+    repository = engine.invoices
     @invoice = Invoice.new({
                             :id => "17",
                             :customer_id => "5",
@@ -43,7 +50,6 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_knows_about_parent_repo
-    skip
     assert_instance_of InvoiceRepository, invoice.repository
   end
 end
