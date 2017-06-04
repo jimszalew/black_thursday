@@ -15,4 +15,8 @@ class TransactionRepository
       transactions[row_data[:id].to_i] = Transaction.new(row_data, self)
     end
   end
+
+  def all
+    transactions.values
+  end
 end

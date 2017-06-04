@@ -28,4 +28,10 @@ class TransactionRepositoryTest < Minitest::Test
 
     assert_instance_of Transaction, transaction_repo.transactions[random_transaction_key]
   end
+
+  def test_it_can_return_all_transaction_instances
+    actual = transaction_repo.all
+    assert_equal 120, actual.length
+    assert_instance_of Transaction, actual.sample
+  end
 end
