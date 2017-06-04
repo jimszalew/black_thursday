@@ -11,8 +11,10 @@ class CustomerRepositoryTest < Minitest::Test
     @customer_repo = CustomerRepository.new(csv, engine)
   end
 
-  def test_it_exists
+  def test_it_exists_and_populates_customers_automatically
     assert_instance_of CustomerRepository, customer_repo
+    assert_instance_of Customer, customer_repo.customers[customer_repo.customers.keys.sample]
+    assert_equal 120, customer_repo.customers.keys.length
   end
 
   def test_it_can_add_customers
@@ -25,4 +27,6 @@ class CustomerRepositoryTest < Minitest::Test
 
     assert_instance_of Customer, customer_repo.customers[random_customer_key]
   end
+
+
 end

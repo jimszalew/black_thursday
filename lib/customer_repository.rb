@@ -6,6 +6,7 @@ class CustomerRepository
 
   def initialize(csv, engine)
     @customers = {}
+    self.add(csv)
   end
 
   def add(csv)
