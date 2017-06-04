@@ -20,4 +20,8 @@ class InvoiceItemRepository
   def all
     invoice_items.values
   end
+
+  def find_by_id(id)
+    invoice_items[id]
+  end
 end

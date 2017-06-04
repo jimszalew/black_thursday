@@ -43,4 +43,11 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 120, actual.length
     assert_instance_of InvoiceItem, actual.sample
   end
+
+  def test_it_can_find_invoice_item_by_id
+    id = 13
+
+    assert_instance_of InvoiceItem, invoice_item_repo.find_by_id(id)
+    assert_equal id, invoice_item_repo.find_by_id(id).id
+  end
 end
