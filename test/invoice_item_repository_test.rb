@@ -3,7 +3,7 @@ require 'minitest/pride'
 require 'csv'
 require_relative '../lib/invoice_item_repository'
 # require_relative '../lib/sales_engine'
-
+require 'pry'
 class InvoiceItemRepositoryTest < Minitest::Test
 
   attr_reader :invoice_item_repo
@@ -49,5 +49,19 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
     assert_instance_of InvoiceItem, invoice_item_repo.find_by_id(id)
     assert_equal id, invoice_item_repo.find_by_id(id).id
+  end
+
+  def test_returns_nil_for_invalid_id
+    id = "2412341234"
+
+    assert_nil invoice_item_repo.find_by_id(id)
+  end
+
+  def test_it_can_find_all_invoice_items_by_item_id
+    actual = invoice_item_repo.find_all_by_item_id(263526970)
+# binding.pry
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+    assert_equal 1, actual.length
   end
 end
