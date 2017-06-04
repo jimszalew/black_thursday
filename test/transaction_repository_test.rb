@@ -43,8 +43,16 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal id, transaction_repo.find_by_id(id).id
   end
 
-  def test_it_can_find_all_invoices_by_invoice_id
+  def test_it_can_find_all_transactions_by_invoice_id
     actual = transaction_repo.find_all_by_invoice_id(31)
+
+    assert_instance_of Array, actual
+    assert_instance_of Transaction, actual.sample
+    assert_equal 1, actual.length
+  end
+
+  def test_it_can_find_all_transactions_by_cc_num
+    actual = transaction_repo.find_all_by_credit_card_number("4613250127567219")
 
     assert_instance_of Array, actual
     assert_instance_of Transaction, actual.sample
