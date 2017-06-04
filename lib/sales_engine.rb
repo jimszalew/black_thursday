@@ -94,4 +94,8 @@ class SalesEngine
   def get_transactions_by_invoice_id(invoice_id)
     transactions.find_all_by_invoice_id(invoice_id)
   end
+
+  def customer_by_invoice(customer_id)
+    customers.find_by_id(customer_id)
+  end
 end

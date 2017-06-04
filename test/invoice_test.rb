@@ -30,7 +30,7 @@ class InvoiceTest < Minitest::Test
 
     @invoice2 = Invoice.new({
                             :id => "46",
-                            :customer_id => "5",
+                            :customer_id => "21",
                             :merchant_id => "12334112",
                             :status => "pending",
                             :created_at => "2005-06-03",
@@ -88,5 +88,12 @@ class InvoiceTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of Transaction, actual.sample
     assert_equal 1, actual.count
+  end
+
+  def test_it_can_get_its_customer
+    actual = invoice2.customer
+
+    assert_instance_of Customer, actual
+    assert_equal 21, actual.id
   end
 end

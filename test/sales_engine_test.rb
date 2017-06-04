@@ -151,4 +151,11 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Transaction, actual.sample
     assert_equal 1, actual.count
   end
+
+  def test_it_can_get_customer_by_invoice
+    actual = se.customer_by_invoice(21)
+
+    assert_instance_of Customer, actual
+    assert_equal 21, actual.id
+  end
 end
