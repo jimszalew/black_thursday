@@ -27,4 +27,8 @@ class Invoice
   def items
     repository.get_matching_items(id)
   end
+
+  def transactions
+    repository.get_transactions_by_invoice_id(id)
+  end
 end
