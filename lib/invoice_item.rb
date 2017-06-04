@@ -18,5 +18,7 @@ class InvoiceItem
     @updated_at = Time.parse(data[:created_at])
   end
 
-
+  def unit_price_to_dollars
+    unit_price.to_f
+  end
 end

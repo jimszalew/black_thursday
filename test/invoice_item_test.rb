@@ -54,4 +54,9 @@ class InvoiceItemTest < Minitest::Test
     assert_instance_of Time, invoice_item.created_at
     assert_instance_of Time, invoice_item.updated_at
   end
+
+  def test_it_can_convert_to_dollars
+    assert_instance_of Float, invoice_item.unit_price_to_dollars
+    assert_equal 463.17, invoice_item.unit_price_to_dollars
+  end
 end
