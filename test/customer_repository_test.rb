@@ -33,4 +33,15 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 120, actual.length
     assert_instance_of Customer, actual.sample
   end
+
+  def test_it_can_find_customer_by_id
+    id = 6
+
+    assert_instance_of Customer, customer_repo.find_by_id(id)
+    assert_equal id, customer_repo.find_by_id(id).id
+  end
+
+  def test_returns_nil_for_invalid_id
+    assert_nil customer_repo.find_by_id(678593)
+  end
 end

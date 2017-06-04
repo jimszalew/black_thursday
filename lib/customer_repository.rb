@@ -19,4 +19,8 @@ class CustomerRepository
   def all
     customers.values
   end
+
+  def find_by_id(id)
+    customers[id]
+  end
 end
