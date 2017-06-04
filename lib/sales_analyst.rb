@@ -59,8 +59,9 @@ class SalesAnalyst
 
   def golden_items
     std_dev = average_item_price_standard_deviation
+    average = average_average_price_per_merchant
     engine.items.all.find_all do |item|
-      (item.unit_price - average_average_price_per_merchant) > (2 * std_dev)
+      (item.unit_price - average) > (2 * std_dev)
     end
   end
 
