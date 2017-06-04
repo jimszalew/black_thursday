@@ -90,4 +90,8 @@ class SalesEngine
     item_ids = item_ids_by_invoice_id(invoice_id)
     items.get_matching_items(item_ids)
   end
+
+  def get_transactions_by_invoice_id(invoice_id)
+    transactions.find_all_by_invoice_id(invoice_id)
+  end
 end
