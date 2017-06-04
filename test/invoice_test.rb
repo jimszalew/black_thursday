@@ -6,16 +6,20 @@ require_relative '../lib/sales_engine'
 class InvoiceTest < Minitest::Test
   attr_reader :invoice
   def setup
-    small_csv_paths = {
+    csv_paths = {
                         :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = SalesEngine.from_csv(small_csv_paths)
-    csv  = CSV.open './test/data/small_item_set.csv', headers: true, header_converters: :symbol
+
+    engine = SalesEngine.from_csv(csv_paths)
     repository = engine.invoices
+
     @invoice = Invoice.new({
-                            :id => "17",
+                            :id => "3",
                             :customer_id => "5",
                             :merchant_id => "12334112",
                             :status => "pending",
@@ -29,7 +33,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_has_an_id
-    assert_equal 17, invoice.id
+    assert_equal 3, invoice.id
   end
 
   def test_it_knows_its_customer_id
@@ -41,7 +45,7 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_has_a_status
-    assert_equal "pending", invoice.status
+    assert_equal :pending, invoice.status
   end
 
   def test_it_knows_when_it_was_created_and_updated
@@ -58,5 +62,13 @@ class InvoiceTest < Minitest::Test
 
     assert_instance_of Merchant, actual
     assert_equal 12334112, actual.id
+  end
+
+  def test_it_can_get_its_items
+    actual = invoice.items
+
+    assert_instance_of Array, actual
+    assert_instance_of Item, actual.sample
+    assert_equal 1, actual.count
   end
 end
