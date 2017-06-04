@@ -9,19 +9,16 @@ class SalesEngineTest < Minitest::Test
     csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
 
     @se = SalesEngine.from_csv(csv_paths)
   end
 
   def test_it_exists
-    item_dummy = CSV.open './test/data/small_item_set.csv', headers: true, header_converters: :symbol
-    merch_dummy = CSV.open './test/data/merchant_sample.csv', headers: true, header_converters: :symbol
-    invoice_dummy = CSV.open './test/data/medium_invoice_set.csv', headers: true, header_converters: :symbol
-
-    se = SalesEngine.new(item_dummy, merch_dummy, invoice_dummy)
-
     assert_instance_of SalesEngine, se
   end
 
@@ -41,6 +38,18 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of InvoiceRepository, se.invoices
   end
 
+  def test_sales_engine_invoice_items_returns_invoice_item_repo_instance
+    assert_instance_of InvoiceItemRepository, se.invoice_items
+  end
+
+  def test_sales_engine_transactions_returns_transaction_repo_instance
+    assert_instance_of TransactionRepository, se.transactions
+  end
+
+  def test_sales_engine_customers_returns_customer_repo_instance
+    assert_instance_of CustomerRepository, se.customers
+  end
+
   def test_sales_engine_items_returns_all_item_instances
     assert_equal 6, se.items.all.length
     assert_instance_of Item, se.items.all.sample
@@ -54,6 +63,21 @@ class SalesEngineTest < Minitest::Test
   def test_sales_engine_invoices_returns_all_invoice_instances
     assert_equal 20, se.invoices.all.length
     assert_instance_of Invoice, se.invoices.all.sample
+  end
+
+  def test_sales_engine_invoice_items_returns_all_invoice_item_instances
+    assert_equal 120, se.invoice_items.all.length
+    assert_instance_of InvoiceItem, se.invoice_items.all.sample
+  end
+
+  def test_sales_engine_transactions_returns_all_transactions_instances
+    assert_equal 120, se.transactions.all.length
+    assert_instance_of Transaction, se.transactions.all.sample
+  end
+
+  def test_sales_engine_customers_returns_all_customer_instances
+    assert_equal 120, se.customers.all.length
+    assert_instance_of Customer, se.customers.all.sample
   end
 
   def test_it_can_return_all_items_for_a_merchant
