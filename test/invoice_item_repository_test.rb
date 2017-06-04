@@ -59,9 +59,17 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_it_can_find_all_invoice_items_by_item_id
     actual = invoice_item_repo.find_all_by_item_id(263526970)
-# binding.pry
+
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
     assert_equal 1, actual.length
+  end
+
+  def test_it_can_find_all_invoice_items_by_invoice_id
+    actual = invoice_item_repo.find_all_by_invoice_id(3)
+# binding.pry
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+    assert_equal 8, actual.length
   end
 end
