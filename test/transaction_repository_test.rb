@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'csv'
 require_relative '../lib/transaction_repository'
+require_relative '../lib/invoice'
 # require_relative "../lib/sales_engine"
 
 class TransactionRepositoryTest < Minitest::Test
@@ -40,5 +41,13 @@ class TransactionRepositoryTest < Minitest::Test
 
     assert_instance_of Transaction, transaction_repo.find_by_id(id)
     assert_equal id, transaction_repo.find_by_id(id).id
+  end
+
+  def test_it_can_find_all_invoices_by_invoice_id
+    actual = transaction_repo.find_all_by_invoice_id(31)
+
+    assert_instance_of Array, actual
+    assert_instance_of Transaction, actual.sample
+    assert_equal 1, actual.length
   end
 end
