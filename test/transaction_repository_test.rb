@@ -86,4 +86,11 @@ class TransactionRepositoryTest < Minitest::Test
   def test_it_knows_about_parent_sales_engine
     assert_instance_of SalesEngine, transaction_repo.engine
   end
+
+  def test_it_can_get_invoice_by_transaction
+    actual = transaction_repo.invoice_by_transaction(18)
+
+    assert_instance_of Invoice, actual
+    assert_equal 18, actual.id
+  end
 end
