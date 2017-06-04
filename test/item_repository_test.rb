@@ -8,20 +8,24 @@ require "pry"
 class ItemRepositoryTest < Minitest::Test
   attr_reader :item_repo
   def setup
-    small_csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
+    csv_paths = {
+                        :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = SalesEngine.from_csv(small_csv_paths)
-    csv = CSV.open('./test/data/small_item_set.csv', :headers => true, :header_converters => :symbol)
 
-    @item_repo = ItemRepository.new(csv, engine)
+    engine = SalesEngine.from_csv(csv_paths)
+
+    @item_repo = engine.items
   end
 
   def test_it_exists_and_populates_items_automatically
     assert_instance_of ItemRepository, item_repo
     assert_instance_of Item, item_repo.items[item_repo.items.keys.sample]
-    assert_equal 6, item_repo.items.keys.length
+    assert_equal 29, item_repo.items.keys.length
   end
 
   def test_it_can_add_items
@@ -38,7 +42,7 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_item_instances
     actual = item_repo.all
-    assert_equal 6, actual.length
+    assert_equal 29, actual.length
     assert_instance_of Item, actual.sample
   end
 
@@ -66,7 +70,7 @@ class ItemRepositoryTest < Minitest::Test
     actual = item_repo.find_all_with_description('Handmade')
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
-    assert_equal 2, actual.length
+    assert_equal 7, actual.length
   end
 
   def test_it_returns_empty_array_for_silly_string
@@ -80,7 +84,7 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
-    assert_equal 2, actual.length
+    assert_equal 1, actual.length
   end
 
   def test_it_can_find_all_items_in_price_range
@@ -88,7 +92,7 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
-    assert_equal 2, actual.length
+    assert_equal 18, actual.length
   end
 
   def test_it_can_find_all_items_by_merch_id
@@ -110,4 +114,11 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 12334113, actual.id
   end
 
+  def test_it_can_get_items_by_invoice_id
+    actual = item_repo.get_matching_items([263396279, 263395237])
+
+    assert_instance_of Array, actual
+    assert_instance_of Item, actual.sample
+    assert_equal 2, actual.count
+  end
 end

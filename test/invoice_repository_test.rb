@@ -7,14 +7,17 @@ require_relative "../lib/sales_engine"
 class InvoiceRepositoryTest < Minitest::Test
   attr_reader :invoice_repo
   def setup
-    small_csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
+    csv_paths = {
+                        :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = SalesEngine.from_csv(small_csv_paths)
-    csv = CSV.open './test/data/medium_invoice_set.csv', headers: true, header_converters: :symbol
-    # @invoice_repo = InvoiceRepository.new(csv, engine)
+
+    engine = SalesEngine.from_csv(csv_paths)
+
     @invoice_repo = engine.invoices
   end
 
@@ -71,11 +74,11 @@ class InvoiceRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_invoices_by_status
-    actual = invoice_repo.find_all_by_status("pending")
+    actual = invoice_repo.find_all_by_status(:pending)
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 10, actual.length
+    assert_equal 9, actual.length
   end
 
   def test_it_knows_about_parent_sales_engine
@@ -87,5 +90,13 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Merchant, actual
     assert_equal 12334112, actual.id
+  end
+
+  def test_it_can_get_items_by_invoice_id
+    actual = invoice_repo.get_matching_items(3)
+
+    assert_instance_of Array, actual
+    assert_instance_of Item, actual.sample
+    assert_equal 1, actual.count
   end
 end

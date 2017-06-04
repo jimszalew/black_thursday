@@ -1,13 +1,25 @@
 require "minitest/autorun"
 require "minitest/pride"
 require_relative "../lib/customer"
+require_relative "../lib/sales_engine"
 
 class CustomerTest < Minitest::Test
 
   attr_reader :customer
 
   def setup
-    repository = Object.new
+    csv_paths = {
+                        :items     => "./test/data/small_item_set.csv",
+                        :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
+                      }
+
+    engine = SalesEngine.from_csv(csv_paths)
+    repository = engine.customers
+
     @customer = Customer.new({
                               :id => "6",
                               :first_name => "Joan",
@@ -36,5 +48,9 @@ class CustomerTest < Minitest::Test
   def test_it_knows_when_it_was_created_and_updated
     assert_instance_of Time, customer.created_at
     assert_instance_of Time, customer.updated_at
+  end
+
+  def test_it_knows_about_parent_repo
+    assert_instance_of CustomerRepository, customer.repository
   end
 end

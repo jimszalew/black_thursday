@@ -1,13 +1,23 @@
 require "minitest/autorun"
 require "minitest/pride"
 require_relative "../lib/transaction"
-# require_relative "../lib/item_repository"
-# require_relative "../lib/sales_engine"
+require_relative "../lib/sales_engine"
 
 class TransactionTest < Minitest::Test
   attr_reader :transaction
   def setup
-    repository = Object.new
+    csv_paths = {
+                        :items     => "./test/data/small_item_set.csv",
+                        :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
+                      }
+
+    engine = SalesEngine.from_csv(csv_paths)
+    repository = engine.transactions
+
     @transaction = Transaction.new({
                           :id => "6",
                           :invoice_id => "4966",
@@ -46,5 +56,9 @@ class TransactionTest < Minitest::Test
   def test_it_knows_when_it_was_created_and_updated
     assert_instance_of Time, transaction.created_at
     assert_instance_of Time, transaction.updated_at
+  end
+
+  def test_it_knows_about_parent_repo
+    assert_instance_of TransactionRepository, transaction.repository
   end
 end

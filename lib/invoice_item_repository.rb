@@ -2,7 +2,8 @@ require_relative 'invoice_item'
 
 class InvoiceItemRepository
 
-  attr_reader :invoice_items
+  attr_reader :invoice_items,
+              :engine
 
   def initialize(csv, engine)
     @invoice_items = {}
@@ -37,4 +38,9 @@ class InvoiceItemRepository
     end
   end
 
+  def item_ids_by_invoice_id(invoice_id)
+    find_all_by_invoice_id(invoice_id).map do |invoice_item|
+      invoice_item.item_id
+    end
+  end
 end

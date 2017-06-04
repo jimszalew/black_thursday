@@ -9,7 +9,8 @@ class InvoiceItem
               :quantity,
               :unit_price,
               :created_at,
-              :updated_at
+              :updated_at,
+              :repository
 
   def initialize(data, repository)
     @id = data[:id].to_i
@@ -19,6 +20,7 @@ class InvoiceItem
     @unit_price = (BigDecimal.new(((data[:unit_price].to_i)/100.0), 0)).round(2)
     @created_at = Time.parse(data[:created_at])
     @updated_at = Time.parse(data[:created_at])
+    @repository = repository
   end
 
   def unit_price_to_dollars

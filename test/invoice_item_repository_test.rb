@@ -2,23 +2,25 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require 'csv'
 require_relative '../lib/invoice_item_repository'
-# require_relative '../lib/sales_engine'
+require_relative '../lib/sales_engine'
 require 'pry'
 class InvoiceItemRepositoryTest < Minitest::Test
 
   attr_reader :invoice_item_repo
 
   def setup
-    small_csv_paths = {
-                        :invoice_items => './test/data/medium_invoice_item_set.csv',
+    csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = Object.new
-    # engine = SalesEngine.from_csv(small_csv_paths)
-    csv = CSV.open './test/data/medium_invoice_item_set.csv', headers: true, header_converters: :symbol
-    @invoice_item_repo = InvoiceItemRepository.new(csv, engine)
+
+    engine = SalesEngine.from_csv(csv_paths)
+
+    @invoice_item_repo = engine.invoice_items
   end
 
   def test_it_exists_and_populates_invoices_items_automatically
@@ -67,9 +69,19 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_it_can_find_all_invoice_items_by_invoice_id
     actual = invoice_item_repo.find_all_by_invoice_id(3)
-# binding.pry
+
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
+    assert_equal 8, actual.length
+  end
+
+  def test_it_knows_about_parent_sales_engine
+    assert_instance_of SalesEngine, invoice_item_repo.engine
+  end
+
+  def test_it_can_find_item_ids_by_invoice_id
+    actual = invoice_item_repo.item_ids_by_invoice_id(3)
+    assert_instance_of Array, actual
     assert_equal 8, actual.length
   end
 end

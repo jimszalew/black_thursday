@@ -23,4 +23,8 @@ class Invoice
   def merchant
     repository.merchant_by_invoice(merchant_id)
   end
+
+  def items
+    repository.get_matching_items(id)
+  end
 end

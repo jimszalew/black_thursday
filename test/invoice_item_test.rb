@@ -8,21 +8,27 @@ class InvoiceItemTest < Minitest::Test
   attr_reader :invoice_item
 
   def setup
-    small_csv_paths = { :invoice_items => './test/data/medium_invoice_item_set.csv'
-      }
+    csv_paths = {
+                        :items     => "./test/data/small_item_set.csv",
+                        :merchants => "./test/data/merchant_sample.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
+                      }
 
-    # engine = SalesEngine.from_csv(small_csv_paths)
-    csv  = CSV.open './test/data/medium_invoice_item_set.csv', headers: true, header_converters: :symbol
+    engine = SalesEngine.from_csv(csv_paths)
+    repository = engine.invoice_items
 
     @invoice_item = InvoiceItem.new({
-                                      :id => '90',
-                                      :item_id => '263547180',
-                                      :invoice_id => '18',
-                                      :quantity => '5',
-                                      :unit_price => '46317',
-                                      :created_at => '2012-03-27 14:54:10',
-                                      :updated_at => '2012-03-27 14:54:10'
-                                    })
+                                      id: '90',
+                                      item_id: '263547180',
+                                      invoice_id: '18',
+                                      quantity: '5',
+                                      unit_price: '46317',
+                                      created_at: '2012-03-27 14:54:09 UTC',
+                                      updated_at: '2012-03-27 14:54:09 UTC'
+                                      }, repository)
   end
 
   def test_it_exists
@@ -30,15 +36,15 @@ class InvoiceItemTest < Minitest::Test
   end
 
   def test_it_has_an_id
-    assert_equal '90', invoice_item.id
+    assert_equal 90, invoice_item.id
   end
 
   def test_it_knows_item_id
-    assert_equal '263547180', invoice_item.item_id
+    assert_equal 263547180, invoice_item.item_id
   end
 
   def test_it_knows_invoice_id
-    assert_equal '18', invoice_item.invoice_id
+    assert_equal 18, invoice_item.invoice_id
   end
 
   def test_it_knows_quantity
@@ -58,5 +64,9 @@ class InvoiceItemTest < Minitest::Test
   def test_it_can_convert_to_dollars
     assert_instance_of Float, invoice_item.unit_price_to_dollars
     assert_equal 463.17, invoice_item.unit_price_to_dollars
+  end
+
+  def test_it_knows_about_parent_repo
+    assert_instance_of InvoiceItemRepository, invoice_item.repository
   end
 end
