@@ -20,4 +20,8 @@ class CustomerTest < Minitest::Test
   def test_it_exists
     assert_instance_of Customer, customer
   end
+
+  def test_it_knows_its_id
+    assert_equal 6, customer.id
+  end
 end

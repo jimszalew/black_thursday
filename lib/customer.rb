@@ -1,5 +1,8 @@
 class Customer
 
-  def initialize(csv, repository)
+  attr_reader :id
+
+  def initialize(data, repository)
+    @id = data[:id].to_i
   end
 end
