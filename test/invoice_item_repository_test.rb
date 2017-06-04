@@ -78,4 +78,10 @@ class InvoiceItemRepositoryTest < Minitest::Test
   def test_it_knows_about_parent_sales_engine
     assert_instance_of SalesEngine, invoice_item_repo.engine
   end
+
+  def test_it_can_find_item_ids_by_invoice_id
+    actual = invoice_item_repo.item_ids_by_invoice_id(3)
+    assert_instance_of Array, actual
+    assert_equal 8, actual.length
+  end
 end
