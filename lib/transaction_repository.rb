@@ -6,6 +6,7 @@ class TransactionRepository
   def initialize(csv, engine)
     @transactions = {}
     @engine = engine
+    self.add(csv)
   end
 
   def add(csv)

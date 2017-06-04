@@ -8,7 +8,7 @@ class TransactionRepositoryTest < Minitest::Test
   attr_reader :transaction_repo
   def setup
     engine = Object.new
-    csv = CSV.open './test/data/medium_invoice_set.csv', headers: true, header_converters: :symbol
+    csv = CSV.open './test/data/medium_transaction_set.csv', headers: true, header_converters: :symbol
     @transaction_repo = TransactionRepository.new(csv, engine)
   end
 
