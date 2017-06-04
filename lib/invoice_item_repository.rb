@@ -16,4 +16,8 @@ class InvoiceItemRepository
       invoice_items[data[:id].to_i] = InvoiceItem.new(data, self)
     end
   end
+
+  def all
+    invoice_items.values
+  end
 end
