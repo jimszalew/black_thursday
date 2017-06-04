@@ -44,4 +44,13 @@ class CustomerRepositoryTest < Minitest::Test
   def test_returns_nil_for_invalid_id
     assert_nil customer_repo.find_by_id(678593)
   end
+
+  def test_it_can_find_all_customers_by_first_name
+    actual = customer_repo.find_all_by_first_name("Kailee")
+
+    assert_instance_of Array, actual
+    assert_instance_of Customer, actual.sample
+    assert_equal 1, actual.length
+    assert customer_repo.find_all_by_first_name("C'thulu").empty?
+  end
 end
