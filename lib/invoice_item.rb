@@ -1,3 +1,6 @@
+require 'bigdecimal'
+require 'time'
+
 class InvoiceItem
 
   attr_reader :id,
@@ -8,7 +11,7 @@ class InvoiceItem
               :created_at,
               :updated_at
 
-  def initialize(data)
+  def initialize(data, repository)
     @id = data[:id]
     @item_id = data[:item_id]
     @invoice_id = data[:invoice_id]
