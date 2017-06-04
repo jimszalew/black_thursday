@@ -15,4 +15,8 @@ class CustomerRepository
       customers[stuff[:id].to_i] = Customer.new(stuff, self)
     end
   end
+
+  def all
+    customers.values
+  end
 end

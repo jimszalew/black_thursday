@@ -28,5 +28,9 @@ class CustomerRepositoryTest < Minitest::Test
     assert_instance_of Customer, customer_repo.customers[random_customer_key]
   end
 
-
+  def test_it_can_return_all_customer_instances
+    actual = customer_repo.all
+    assert_equal 120, actual.length
+    assert_instance_of Customer, actual.sample
+  end
 end
