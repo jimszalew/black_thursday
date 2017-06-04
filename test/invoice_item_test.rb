@@ -19,7 +19,7 @@ class InvoiceItemTest < Minitest::Test
                                       :item_id => '263547180',
                                       :invoice_id => '18',
                                       :quantity => '5',
-                                      :unit_price => '263547180',
+                                      :unit_price => '46317',
                                       :created_at => '2012-03-27 14:54:10',
                                       :updated_at => '2012-03-27 14:54:10'
                                     })
@@ -43,5 +43,10 @@ class InvoiceItemTest < Minitest::Test
 
   def test_it_knows_quantity
     assert_equal '5', invoice_item.quantity
+  end
+
+  def test_it_has_a_unit_price
+    assert_instance_of BigDecimal, invoice_item.unit_price
+    assert_equal 463.17, invoice_item.unit_price
   end
 end
