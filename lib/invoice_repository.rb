@@ -50,6 +50,10 @@ class InvoiceRepository
     engine.get_items_by_invoice_id(invoice_id)
   end
 
+  def get_transactions_by_invoice_id(invoice_id)
+    engine.get_transactions_by_invoice_id(invoice_id)
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end

@@ -4,7 +4,8 @@ require_relative '../lib/invoice'
 # require_relative '../lib/invoice_repository'
 require_relative '../lib/sales_engine'
 class InvoiceTest < Minitest::Test
-  attr_reader :invoice
+  attr_reader :invoice,
+              :invoice2
   def setup
     csv_paths = {
                         :items     => "./test/data/medium_item_set.csv",
@@ -20,6 +21,15 @@ class InvoiceTest < Minitest::Test
 
     @invoice = Invoice.new({
                             :id => "3",
+                            :customer_id => "5",
+                            :merchant_id => "12334112",
+                            :status => "pending",
+                            :created_at => "2005-06-03",
+                            :updated_at => "2015-07-01"
+                          }, repository)
+
+    @invoice2 = Invoice.new({
+                            :id => "46",
                             :customer_id => "5",
                             :merchant_id => "12334112",
                             :status => "pending",
@@ -69,6 +79,14 @@ class InvoiceTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
+    assert_equal 1, actual.count
+  end
+
+  def test_it_can_get_its_transactions
+    actual = invoice2.transactions
+
+    assert_instance_of Array, actual
+    assert_instance_of Transaction, actual.sample
     assert_equal 1, actual.count
   end
 end

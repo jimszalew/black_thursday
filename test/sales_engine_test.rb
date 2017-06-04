@@ -143,4 +143,12 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Item, actual.sample
     assert_equal 1, actual.count
   end
+
+  def test_it_can_get_transactions_by_invoice_id
+    actual = se.get_transactions_by_invoice_id(46)
+
+    assert_instance_of Array, actual
+    assert_instance_of Transaction, actual.sample
+    assert_equal 1, actual.count
+  end
 end
