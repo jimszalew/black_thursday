@@ -46,6 +46,10 @@ class InvoiceRepository
     engine.merchant_by_invoice(merchant_id)
   end
 
+  def get_matching_items(invoice_id)
+    engine.get_items_by_invoice_id(invoice_id)
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end
