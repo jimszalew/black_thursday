@@ -81,4 +81,13 @@ class SalesEngine
     end
     status
   end
+
+  def item_ids_by_invoice_id(invoice_id)
+    invoice_items.item_ids_by_invoice_id(invoice_id)
+  end
+
+  def get_items_by_invoice_id(invoice_id)
+    item_ids = item_ids_by_invoice_id(invoice_id)
+    items.get_matching_items(item_ids)
+  end
 end

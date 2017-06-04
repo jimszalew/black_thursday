@@ -7,7 +7,7 @@ class SalesEngineTest < Minitest::Test
   attr_reader :se
   def setup
     csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
+                        :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
                         :invoices => "./test/data/medium_invoice_set.csv",
                         :invoice_items => "./test/data/medium_invoice_item_set.csv",
@@ -51,7 +51,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_sales_engine_items_returns_all_item_instances
-    assert_equal 6, se.items.all.length
+    assert_equal 29, se.items.all.length
     assert_instance_of Item, se.items.all.sample
   end
 
@@ -128,5 +128,19 @@ class SalesEngineTest < Minitest::Test
     actual = se.invoices_by_status
 
     assert_equal expected, actual
+  end
+
+  def test_it_can_find_item_ids_by_invoice_id
+    actual = se.item_ids_by_invoice_id(3)
+    assert_instance_of Array, actual
+    assert_equal 8, actual.length
+  end
+
+  def test_it_can_get_items_by_invoice_id
+    actual = se.get_items_by_invoice_id(3)
+
+    assert_instance_of Array, actual
+    assert_instance_of Item, actual.sample
+    assert_equal 1, actual.count
   end
 end
