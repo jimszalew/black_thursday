@@ -53,4 +53,13 @@ class CustomerRepositoryTest < Minitest::Test
     assert_equal 1, actual.length
     assert customer_repo.find_all_by_first_name("C'thulu").empty?
   end
+
+  def test_it_can_find_all_customers_by_last_name
+    actual = customer_repo.find_all_by_last_name("McCullough")
+
+    assert_instance_of Array, actual
+    assert_instance_of Customer, actual.sample
+    assert_equal 2, actual.length
+    assert customer_repo.find_all_by_last_name("C'thulu").empty?
+  end
 end
