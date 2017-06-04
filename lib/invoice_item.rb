@@ -13,7 +13,7 @@ class InvoiceItem
 
   def initialize(data, repository)
     @id = data[:id].to_i
-    @item_id = data[:item_id]
+    @item_id = data[:item_id].to_i
     @invoice_id = data[:invoice_id]
     @quantity = data[:quantity]
     @unit_price = (BigDecimal.new(((data[:unit_price].to_i)/100.0), 0)).round(2)
