@@ -2,10 +2,12 @@ require_relative 'customer'
 
 class CustomerRepository
 
-  attr_reader :customers
+  attr_reader :customers,
+              :engine
 
   def initialize(csv, engine)
     @customers = {}
+    @engine = engine
     self.add(csv)
   end
 

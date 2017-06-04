@@ -1,7 +1,8 @@
 require_relative 'transaction'
 
 class TransactionRepository
-  attr_reader :transactions
+  attr_reader :transactions,
+              :engine
 
   def initialize(csv, engine)
     @transactions = {}
