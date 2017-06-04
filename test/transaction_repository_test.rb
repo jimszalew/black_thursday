@@ -34,4 +34,11 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 120, actual.length
     assert_instance_of Transaction, actual.sample
   end
+
+  def test_it_can_find_transaction_by_id
+    id = 6
+
+    assert_instance_of Transaction, transaction_repo.find_by_id(id)
+    assert_equal id, transaction_repo.find_by_id(id).id
+  end
 end
