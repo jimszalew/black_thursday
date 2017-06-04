@@ -58,4 +58,12 @@ class TransactionRepositoryTest < Minitest::Test
     assert_instance_of Transaction, actual.sample
     assert_equal 1, actual.length
   end
+
+  def test_it_can_find_all_transactions_by_result
+    actual = transaction_repo.find_all_by_result("success")
+
+    assert_instance_of Array, actual
+    assert_instance_of Transaction, actual.sample
+    assert_equal 95, actual.length
+  end
 end
