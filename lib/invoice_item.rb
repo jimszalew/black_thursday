@@ -12,7 +12,7 @@ class InvoiceItem
               :updated_at
 
   def initialize(data, repository)
-    @id = data[:id]
+    @id = data[:id].to_i
     @item_id = data[:item_id]
     @invoice_id = data[:invoice_id]
     @quantity = data[:quantity]
