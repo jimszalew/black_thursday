@@ -14,4 +14,15 @@ class CustomerRepositoryTest < Minitest::Test
   def test_it_exists
     assert_instance_of CustomerRepository, customer_repo
   end
+
+  def test_it_can_add_customers
+    csv = CSV.open './test/data/medium_customer_set.csv', headers: true, header_converters: :symbol
+
+    customer_repo.customers.clear
+
+    customer_repo.add(csv)
+    random_customer_key = customer_repo.customers.keys.sample
+
+    assert_instance_of Customer, customer_repo.customers[random_customer_key]
+  end
 end
