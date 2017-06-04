@@ -40,4 +40,8 @@ class InvoiceItemTest < Minitest::Test
   def test_it_knows_invoice_id
     assert_equal '18', invoice_item.invoice_id
   end
+
+  def test_it_knows_quantity
+    assert_equal '5', invoice_item.quantity
+  end
 end
