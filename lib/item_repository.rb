@@ -59,6 +59,12 @@ class ItemRepository
     engine.merchant_by_item(merchant_id)
   end
 
+  def get_matching_items(item_ids)
+    all.find_all do |item|
+      item_ids.include?(item.id)
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@items.size} rows>"
   end
