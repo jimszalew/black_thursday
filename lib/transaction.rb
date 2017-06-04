@@ -20,4 +20,8 @@ class Transaction
     @updated_at = Time.parse(data[:updated_at])
     @repository = repository
   end
+
+  def invoice
+    repository.invoice_by_transaction(invoice_id)
+  end
 end

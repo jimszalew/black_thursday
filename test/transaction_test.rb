@@ -20,7 +20,7 @@ class TransactionTest < Minitest::Test
 
     @transaction = Transaction.new({
                           :id => "6",
-                          :invoice_id => "4966",
+                          :invoice_id => "18",
                           :credit_card_number => "4558368405929183",
                           :credit_card_expiration_date => "0417",
                           :result => "success",
@@ -38,7 +38,7 @@ class TransactionTest < Minitest::Test
   end
 
   def test_it_knows_its_invoice_id
-    assert_equal 4966, transaction.invoice_id
+    assert_equal 18, transaction.invoice_id
   end
 
   def test_it_knows_its_credit_card_number
@@ -60,5 +60,12 @@ class TransactionTest < Minitest::Test
 
   def test_it_knows_about_parent_repo
     assert_instance_of TransactionRepository, transaction.repository
+  end
+
+  def test_it_can_get_its_invoice
+    actual = transaction.invoice
+
+    assert_instance_of Invoice, actual
+    assert_equal 18, actual.id
   end
 end
