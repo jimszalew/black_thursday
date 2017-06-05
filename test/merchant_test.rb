@@ -11,6 +11,7 @@ class MerchantTest < Minitest::Test
   attr_reader :merchant,
               :merchant2,
               :merchant3
+              :merchant3
 
   def setup
     csv_paths = {
@@ -27,6 +28,7 @@ class MerchantTest < Minitest::Test
     @merchant = Merchant.new({:id => 12337139, :name => "StarCityGames"}, repo)
     @merchant2 = Merchant.new({:id => 12335955, :name => "Amazong"},repo)
     @merchant3 = Merchant.new({:id => 12334213, :name => "Sal's Sassafras Supply"},repo)
+    @merchant4 = Merchant.new({:id => 12334634, :name => "Mike's Meme Makers"},repo)
   end
 
   def test_it_exists
@@ -69,7 +71,7 @@ class MerchantTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 2, actual.count
+    assert_equal 3, actual.count
     assert_equal 12335955, actual.sample.merchant_id
   end
 
@@ -82,22 +84,8 @@ class MerchantTest < Minitest::Test
   end
 
   def test_it_can_get_its_total_revenue
-    skip
-    csv_paths = {
-                        :items     => "./data/items.csv",
-                        :merchants => "./data/merchants.csv",
-                        :invoices => "./data/invoices.csv",
-                        :invoice_items => "./data/invoice_items.csv",
-                        :transactions => "./data/transactions.csv",
-                        :customers => "./data/customers.csv"
-                      }
-    engine = SalesEngine.from_csv(csv_paths)
-    repo = engine.merchants
-
-    merchant = Merchant.new({:id => 12337139, :name => "StarCityGames"}, repo)
-
     actual = merchant.total_revenue
 
-    assert_equal 79886.25, actual
+    assert_equal 24776.52, actual
   end
 end
