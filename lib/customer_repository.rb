@@ -37,4 +37,8 @@ class CustomerRepository
       customer.last_name == last_name
     end
   end
+
+  def inspect
+    "#<#{self.class} #{@customers.size} rows>"
+  end
 end
