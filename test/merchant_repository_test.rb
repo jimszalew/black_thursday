@@ -96,4 +96,12 @@ class MerchantRepositoryTest < Minitest::Test
     assert_instance_of Merchant, actual.sample
     assert_equal 2, actual.count
   end
+
+  def test_it_can_get_customers_by_merchant_id
+    actual = merch_repo.get_customers_by_merchant_id(12337139)
+
+    assert_instance_of Array, actual
+    assert_instance_of Customer, actual.sample
+    assert_equal 1, actual.count
+  end
 end
