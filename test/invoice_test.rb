@@ -96,4 +96,9 @@ class InvoiceTest < Minitest::Test
     assert_instance_of Customer, actual
     assert_equal 21, actual.id
   end
+
+  def test_it_knows_if_invoice_is_paid_in_full
+    assert invoice2.paid_in_full?
+    refute invoice.paid_in_full?
+  end
 end
