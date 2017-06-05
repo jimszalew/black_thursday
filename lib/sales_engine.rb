@@ -102,4 +102,8 @@ class SalesEngine
   def invoice_by_transaction(invoice_id)
     invoices.find_by_id(invoice_id)
   end
+
+  def merchant_ids_by_customer_id(customer_id)
+    invoices.merchant_ids_by_customer_id(customer_id)
+  end
 end
