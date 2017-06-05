@@ -187,4 +187,12 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Array, actual
     assert_equal 1, actual.length
   end
+
+  def test_it_can_get_customers_by_merchant_id
+    actual = se.get_customers_by_merchant_id(12337139)
+
+    assert_instance_of Array, actual
+    assert_instance_of Customer, actual.sample
+    assert_equal 1, actual.count
+  end
 end

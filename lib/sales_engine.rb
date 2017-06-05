@@ -115,4 +115,9 @@ class SalesEngine
   def customer_ids_by_merchant_id(merchant_id)
     invoices.customer_ids_by_merchant_id(merchant_id)
   end
+
+  def get_customers_by_merchant_id(merchant_id)
+    customer_ids = customer_ids_by_merchant_id(merchant_id)
+    customers.get_matching_customers(customer_ids)
+  end
 end
