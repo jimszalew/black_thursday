@@ -80,4 +80,24 @@ class MerchantTest < Minitest::Test
     assert_instance_of Customer, actual.sample
     assert_equal 1, actual.length
   end
+
+  def test_it_can_get_its_total_revenue
+    skip
+    csv_paths = {
+                        :items     => "./data/items.csv",
+                        :merchants => "./data/merchants.csv",
+                        :invoices => "./data/invoices.csv",
+                        :invoice_items => "./data/invoice_items.csv",
+                        :transactions => "./data/transactions.csv",
+                        :customers => "./data/customers.csv"
+                      }
+    engine = SalesEngine.from_csv(csv_paths)
+    repo = engine.merchants
+
+    merchant = Merchant.new({:id => 12337139, :name => "StarCityGames"}, repo)
+
+    actual = merchant.total_revenue
+
+    assert_equal 79886.25, actual
+  end
 end
