@@ -120,4 +120,8 @@ class SalesAnalyst
   def total_revenue_by_date(date)
     engine.get_total_revenue_by_date[date]
   end
+
+  def top_revenue_earners(range=20)
+    engine.merchants.merchants_by_total_revenue[0..(range - 1)]
+  end
 end
