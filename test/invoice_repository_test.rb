@@ -128,4 +128,12 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_instance_of Array, actual
     assert_equal 1, actual.length
   end
+
+  def test_it_can_get_invoice_items_by_invoice
+    actual = invoice_repo.get_invoice_items_by_invoice(1)
+
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+    assert_equal 8, actual.count
+  end
 end

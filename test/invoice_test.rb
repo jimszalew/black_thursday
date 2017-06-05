@@ -5,7 +5,8 @@ require_relative '../lib/invoice'
 require_relative '../lib/sales_engine'
 class InvoiceTest < Minitest::Test
   attr_reader :invoice,
-              :invoice2
+              :invoice2,
+              :invoice3
   def setup
     csv_paths = {
                         :items     => "./test/data/medium_item_set.csv",
@@ -31,6 +32,15 @@ class InvoiceTest < Minitest::Test
     @invoice2 = Invoice.new({
                             :id => "46",
                             :customer_id => "21",
+                            :merchant_id => "12334112",
+                            :status => "pending",
+                            :created_at => "2005-06-03",
+                            :updated_at => "2015-07-01"
+                          }, repository)
+
+    @invoice3 = Invoice.new({
+                            :id => "1",
+                            :customer_id => "5",
                             :merchant_id => "12334112",
                             :status => "pending",
                             :created_at => "2005-06-03",
@@ -100,5 +110,22 @@ class InvoiceTest < Minitest::Test
   def test_it_knows_if_invoice_is_paid_in_full
     assert invoice2.paid_in_full?
     refute invoice.paid_in_full?
+  end
+
+  def test_it_can_its_invoice_items
+    actual = invoice.invoice_items
+
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+    assert_equal 8, actual.count
+  end
+
+  def test_it_can_calculate_invoice_total
+    assert_instance_of BigDecimal, invoice3.total
+    assert_equal 21067.77, invoice3.total
+  end
+
+  def test_total_returns_nil_if_invoice_not_paid_in_full
+    assert_nil invoice.total
   end
 end
