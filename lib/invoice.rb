@@ -45,4 +45,12 @@ class Invoice
       transaction.result == "success"
     end
   end
+
+  def total
+    return nil if !paid_in_full?
+    total = invoice_items.reduce(0) do |sum, invoice_item|
+      sum + (invoice_item.quantity.to_i * invoice_item.unit_price)
+    end
+    total
+  end
 end
