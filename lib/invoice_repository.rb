@@ -70,6 +70,10 @@ class InvoiceRepository
     end
   end
 
+  def get_invoice_items_by_invoice(invoice_id)
+    engine.get_invoice_items_by_invoice(invoice_id)
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end
