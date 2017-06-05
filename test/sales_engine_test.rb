@@ -203,4 +203,13 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of InvoiceItem, actual.sample
     assert_equal 8, actual.count
   end
+
+  def test_it_can_get_total_revenue_by_date_from_invoice_items
+    actual = se.get_total_revenue_by_date
+    random_day_key = actual.keys.sample
+
+    assert_instance_of Hash, actual
+    assert_instance_of Time, random_day_key
+    assert_equal 33402.68, actual[actual.keys.first]
+  end
 end

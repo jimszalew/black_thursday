@@ -124,4 +124,8 @@ class SalesEngine
   def get_invoice_items_by_invoice(invoice_id)
     invoice_items.find_all_by_invoice_id(invoice_id)
   end
+
+  def get_total_revenue_by_date
+    invoice_items.total_revenue_by_date
+  end
 end
