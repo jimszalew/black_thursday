@@ -74,4 +74,13 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_instance_of InvoiceItem, actual.sample
     assert_equal 8, actual.length
   end
+
+  def test_it_can_calculate_total_revenue_by_date
+    actual = invoice_item_repo.total_revenue_by_date
+    random_day_key = actual.keys.sample
+    
+    assert_instance_of Hash, actual
+    assert_instance_of Time, random_day_key
+    assert_equal 33402.68, actual[actual.keys.first]
+  end
 end

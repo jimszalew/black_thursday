@@ -1,4 +1,6 @@
+require 'time'
 require_relative 'invoice_item'
+require 'pry'
 
 class InvoiceItemRepository
 
@@ -42,6 +44,20 @@ class InvoiceItemRepository
     find_all_by_invoice_id(invoice_id).map do |invoice_item|
       invoice_item.item_id
     end
+  end
+
+  def total_revenue_by_date
+    dates = {}
+    all.each do |invoice_item|
+
+      created = (invoice_item.created_at)
+      if dates.has_key?(created)
+        dates[created] += (invoice_item.unit_price * invoice_item.quantity.to_f)
+      else
+        dates[created] = (invoice_item.unit_price * invoice_item.quantity.to_f)
+      end
+    end
+    dates
   end
 
   def inspect
