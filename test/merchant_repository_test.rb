@@ -39,7 +39,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_merchants
     actual = merch_repo.all
-    assert_equal 20, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Merchant, actual.sample
   end
 
@@ -60,11 +60,14 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_merchants_containing_given_name_fragment
-    merch_1 = merch_repo.find_by_id("12334113")
-    merch_2 = merch_repo.find_by_id("12334123")
+    merchant_ids = [12334113, 12334123, 12334305,
+                    12334365, 12334444, 12334670,
+                    12334671, 12334780, 12334788,
+                    12334815, 12334984]
+    merchants = merch_repo.get_matching_merchants(merchant_ids)
 
     assert_equal [], merch_repo.find_all_by_name("jjj")
-    assert_equal [merch_1, merch_2], merch_repo.find_all_by_name("ke")
+    assert_equal merchants, merch_repo.find_all_by_name("ke")
   end
 
   def test_it_knows_about_parent_sales_engine
@@ -85,7 +88,7 @@ class MerchantRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 2, actual.count
+    assert_equal 3, actual.count
     assert_equal 12335955, actual.sample.merchant_id
   end
 
@@ -103,5 +106,14 @@ class MerchantRepositoryTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of Customer, actual.sample
     assert_equal 1, actual.count
+  end
+
+  def test_it_can_sort_merchants_by_total_revenue
+    actual = merch_repo.merchants_by_total_revenue
+    binding.pry
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert (actual[0].total_revenue > actual[1].total_revenue)
   end
 end
