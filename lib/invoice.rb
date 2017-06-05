@@ -36,6 +36,10 @@ class Invoice
     repository.customer_by_invoice(customer_id)
   end
 
+  def invoice_items
+    repository.get_invoice_items_by_invoice(id)
+  end
+
   def paid_in_full?
     transactions.all? do |transaction|
       transaction.result == "success"

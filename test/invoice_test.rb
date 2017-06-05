@@ -101,4 +101,12 @@ class InvoiceTest < Minitest::Test
     assert invoice2.paid_in_full?
     refute invoice.paid_in_full?
   end
+
+  def test_it_can_its_invoice_items
+    actual = invoice.invoice_items
+
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+    assert_equal 8, actual.count
+  end
 end
