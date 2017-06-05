@@ -64,6 +64,12 @@ class InvoiceRepository
     end
   end
 
+  def customer_ids_by_merchant_id(merchant_id)
+    find_all_by_merchant_id(merchant_id).map do |invoice|
+      invoice.customer_id
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end

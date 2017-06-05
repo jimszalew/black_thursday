@@ -51,6 +51,10 @@ class MerchantRepository
     end
   end
 
+  def get_customers_by_merchant_id(merchant_id)
+    engine.get_customers_by_merchant_id(merchant_id)
+  end
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end

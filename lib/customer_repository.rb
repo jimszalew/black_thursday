@@ -42,6 +42,12 @@ class CustomerRepository
     engine.get_merchants_by_customer_id(customer_id)
   end
 
+  def get_matching_customers(customer_ids)
+    all.find_all do |customer|
+      customer_ids.include?(customer.id)
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@customers.size} rows>"
   end
