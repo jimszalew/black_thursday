@@ -108,8 +108,8 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_knows_if_invoice_is_paid_in_full
-    assert invoice2.paid_in_full?
-    refute invoice.paid_in_full?
+    assert invoice2.is_paid_in_full?
+    refute invoice.is_paid_in_full?
   end
 
   def test_it_can_its_invoice_items
@@ -121,7 +121,27 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_can_calculate_invoice_total
-    assert_instance_of BigDecimal, invoice3.total
+    csv_paths = {
+                        :items     => "./data/items.csv",
+                        :merchants => "./data/merchants.csv",
+                        :invoices => "./data/invoices.csv",
+                        :invoice_items => "./data/invoice_items.csv",
+                        :transactions => "./data/transactions.csv",
+                        :customers => "./data/customers.csv"
+                      }
+
+    engine = SalesEngine.from_csv(csv_paths)
+    repository = engine.invoices
+
+    invoice3 = Invoice.new({
+                            :id => "1",
+                            :customer_id => "5",
+                            :merchant_id => "12334112",
+                            :status => "pending",
+                            :created_at => "2005-06-03",
+                            :updated_at => "2015-07-01"
+                          }, repository)
+                          
     assert_equal 21067.77, invoice3.total
   end
 
