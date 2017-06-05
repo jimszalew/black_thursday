@@ -89,7 +89,7 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal 12335955, actual.sample.merchant_id
   end
 
-  def test_it_can_get_merchant_ids_by_customer_id
+  def test_it_can_get_matching_merchants
     actual = merch_repo.get_matching_merchants([12334141, 12334160])
 
     assert_instance_of Array, actual
