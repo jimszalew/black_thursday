@@ -17,4 +17,8 @@ class Merchant
   def invoices
     repository.all_merchant_invoices(id)
   end
+
+  def customers
+    repository.get_customers_by_merchant_id(id)
+  end
 end
