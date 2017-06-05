@@ -84,4 +84,12 @@ class CustomerRepositoryTest < Minitest::Test
     assert_instance_of Merchant, actual.sample
     assert_equal 1, actual.count
   end
+
+  def test_it_can_get_matching_customers
+    actual = customer_repo.get_matching_customers([9, 12])
+
+    assert_instance_of Array, actual
+    assert_instance_of Customer, actual.sample
+    assert_equal 2, actual.count
+  end
 end
