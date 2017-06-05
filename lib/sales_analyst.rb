@@ -116,4 +116,8 @@ class SalesAnalyst
      percentage = (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
      percentage.round(2)
   end
+
+  def total_revenue_by_date(date)
+    engine.get_total_revenue_by_date[date]
+  end
 end
