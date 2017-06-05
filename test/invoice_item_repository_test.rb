@@ -10,8 +10,8 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def setup
     csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
+                        :items     => "./test/data/medium_item_set.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
                         :invoices => "./test/data/medium_invoice_set.csv",
                         :invoice_items => "./test/data/medium_invoice_item_set.csv",
                         :transactions => "./test/data/medium_transaction_set.csv",
@@ -72,16 +72,6 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
-    assert_equal 8, actual.length
-  end
-
-  def test_it_knows_about_parent_sales_engine
-    assert_instance_of SalesEngine, invoice_item_repo.engine
-  end
-
-  def test_it_can_find_item_ids_by_invoice_id
-    actual = invoice_item_repo.item_ids_by_invoice_id(3)
-    assert_instance_of Array, actual
     assert_equal 8, actual.length
   end
 end

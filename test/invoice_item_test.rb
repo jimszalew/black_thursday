@@ -10,7 +10,7 @@ class InvoiceItemTest < Minitest::Test
   def setup
     csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
                         :invoices => "./test/data/medium_invoice_set.csv",
                         :invoice_items => "./test/data/medium_invoice_item_set.csv",
                         :transactions => "./test/data/medium_transaction_set.csv",
@@ -18,17 +18,17 @@ class InvoiceItemTest < Minitest::Test
                       }
 
     engine = SalesEngine.from_csv(csv_paths)
-    repository = engine.invoice_items
+    repo = engine.invoice_items
 
     @invoice_item = InvoiceItem.new({
-                                      id: '90',
-                                      item_id: '263547180',
-                                      invoice_id: '18',
-                                      quantity: '5',
-                                      unit_price: '46317',
-                                      created_at: '2012-03-27 14:54:09 UTC',
-                                      updated_at: '2012-03-27 14:54:09 UTC'
-                                      }, repository)
+                                      :id => '90',
+                                      :item_id => '263547180',
+                                      :invoice_id => '18',
+                                      :quantity => '5',
+                                      :unit_price => '46317',
+                                      :created_at => '2012-03-27 14:54:10',
+                                      :updated_at => '2012-03-27 14:54:10'
+                                    }, repo)
   end
 
   def test_it_exists
@@ -64,9 +64,5 @@ class InvoiceItemTest < Minitest::Test
   def test_it_can_convert_to_dollars
     assert_instance_of Float, invoice_item.unit_price_to_dollars
     assert_equal 463.17, invoice_item.unit_price_to_dollars
-  end
-
-  def test_it_knows_about_parent_repo
-    assert_instance_of InvoiceItemRepository, invoice_item.repository
   end
 end
