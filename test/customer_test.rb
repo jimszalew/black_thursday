@@ -10,7 +10,7 @@ class CustomerTest < Minitest::Test
   def setup
     csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
                         :invoices => "./test/data/medium_invoice_set.csv",
                         :invoice_items => "./test/data/medium_invoice_item_set.csv",
                         :transactions => "./test/data/medium_transaction_set.csv",
@@ -21,7 +21,7 @@ class CustomerTest < Minitest::Test
     repository = engine.customers
 
     @customer = Customer.new({
-                              :id => "6",
+                              :id => "5",
                               :first_name => "Joan",
                               :last_name => "Clarke",
                               :created_at => "2012-03-27 14:54:10 UTC",
@@ -34,7 +34,7 @@ class CustomerTest < Minitest::Test
   end
 
   def test_it_knows_its_id
-    assert_equal 6, customer.id
+    assert_equal 5, customer.id
   end
 
   def test_it_knows_its_first_name
@@ -52,5 +52,13 @@ class CustomerTest < Minitest::Test
 
   def test_it_knows_about_parent_repo
     assert_instance_of CustomerRepository, customer.repository
+  end
+
+  def test_it_can_get_its_merchants
+    actual = customer.merchants
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 1, actual.length
   end
 end

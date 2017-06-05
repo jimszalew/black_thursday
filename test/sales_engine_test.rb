@@ -8,7 +8,7 @@ class SalesEngineTest < Minitest::Test
   def setup
     csv_paths = {
                         :items     => "./test/data/medium_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
                         :invoices => "./test/data/medium_invoice_set.csv",
                         :invoice_items => "./test/data/medium_invoice_item_set.csv",
                         :transactions => "./test/data/medium_transaction_set.csv",
@@ -56,7 +56,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_sales_engine_merchants_returns_all_merchant_instances
-    assert_equal 5, se.merchants.all.length
+    assert_equal 20, se.merchants.all.length
     assert_instance_of Merchant, se.merchants.all.sample
   end
 
@@ -164,5 +164,20 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of Invoice, actual
     assert_equal 18, actual.id
+  end
+
+  def test_it_can_get_merchant_ids_by_customer_id
+    actual = se.merchant_ids_by_customer_id(3)
+
+    assert_instance_of Array, actual
+    assert_equal 3, actual.length
+  end
+
+  def test_it_can_get_merchants_by_customer_id
+    actual = se.get_merchants_by_customer_id(5)
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 1, actual.count
   end
 end

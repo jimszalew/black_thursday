@@ -58,6 +58,12 @@ class InvoiceRepository
     engine.customer_by_invoice(customer_id)
   end
 
+  def merchant_ids_by_customer_id(customer_id)
+    find_all_by_customer_id(customer_id).map do |invoice|
+      invoice.merchant_id
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@invoices.size} rows>"
   end

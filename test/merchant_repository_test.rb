@@ -8,14 +8,18 @@ class MerchantRepositoryTest < Minitest::Test
   attr_reader :merch_repo
 
   def setup
-    small_csv_paths = {
-                        :items     => "./test/data/small_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+    csv_paths = {
+                        :items     => "./test/data/medium_item_set.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = SalesEngine.from_csv(small_csv_paths)
-    csv = CSV.open('./test/data/merchant_sample.csv', headers: true, header_converters: :symbol)
-    @merch_repo = MerchantRepository.new(csv, engine)
+
+    engine = SalesEngine.from_csv(csv_paths)
+
+    @merch_repo = engine.merchants
   end
 
   def test_merchant_repository_exists
@@ -35,7 +39,7 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_merchants
     actual = merch_repo.all
-    assert_equal 5, actual.length
+    assert_equal 20, actual.length
     assert_instance_of Merchant, actual.sample
   end
 
@@ -83,5 +87,13 @@ class MerchantRepositoryTest < Minitest::Test
     assert_instance_of Invoice, actual.sample
     assert_equal 2, actual.count
     assert_equal 12335955, actual.sample.merchant_id
+  end
+
+  def test_it_can_get_merchant_ids_by_customer_id
+    actual = merch_repo.get_matching_merchants([12334141, 12334160])
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 2, actual.count
   end
 end

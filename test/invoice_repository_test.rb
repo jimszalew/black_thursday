@@ -114,4 +114,11 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_instance_of Customer, actual
     assert_equal 21, actual.id
   end
+
+  def test_it_can_get_merchant_ids_by_customer_id
+    actual = invoice_repo.merchant_ids_by_customer_id(3)
+
+    assert_instance_of Array, actual
+    assert_equal 3, actual.length
+  end
 end

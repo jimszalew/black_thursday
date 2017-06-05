@@ -45,6 +45,12 @@ class MerchantRepository
     engine.all_merchant_invoices(merchant_id)
   end
 
+  def get_matching_merchants(merchant_ids)
+    all.find_all do |merchant|
+      merchant_ids.include?(merchant.id)
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end

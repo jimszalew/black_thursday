@@ -37,4 +37,12 @@ class CustomerRepository
       customer.last_name == last_name
     end
   end
+
+  def get_merchants_by_customer_id(customer_id)
+    engine.get_merchants_by_customer_id(customer_id)
+  end
+
+  def inspect
+    "#<#{self.class} #{@customers.size} rows>"
+  end
 end
