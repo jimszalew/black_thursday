@@ -136,4 +136,8 @@ class SalesEngine
   def get_merchants_with_only_one_item
     merchants.merchants_with_only_one_item
   end
+
+  def get_merchant_total_revenue(merchant_id)
+    merchants.find_by_id(merchant_id).total_revenue
+  end
 end

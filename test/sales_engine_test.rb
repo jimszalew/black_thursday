@@ -225,4 +225,10 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Merchant, actual.sample
     assert_equal 1, actual.sample.items.count
   end
+
+  def test_it_can_get_merchant_total_revenue
+    actual = se.get_merchant_total_revenue(12337139)
+
+    assert_equal 24776.52, actual
+  end
 end
