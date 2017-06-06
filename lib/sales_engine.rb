@@ -128,4 +128,8 @@ class SalesEngine
   def get_total_revenue_by_date
     invoice_items.total_revenue_by_date
   end
+
+  def get_merchants_with_pending_invoices
+    merchants.merchants_with_pending_invoices
+  end
 end

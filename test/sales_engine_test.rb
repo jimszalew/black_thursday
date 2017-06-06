@@ -211,4 +211,10 @@ class SalesEngineTest < Minitest::Test
     assert_instance_of Time, random_day_key
     assert_equal 590019.60, actual[actual.keys.first]
   end
+
+  def test_it_can_get_merchannts_with_pending_invoices
+    actual = se.get_merchants_with_pending_invoices
+
+    assert actual.sample.pending_invoice?
+  end
 end
