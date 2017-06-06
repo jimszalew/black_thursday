@@ -127,7 +127,6 @@ class MerchantRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
-    binding.pry
     assert_equal 1, actual.sample.items.count
   end
 end
