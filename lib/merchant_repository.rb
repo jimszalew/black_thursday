@@ -65,6 +65,12 @@ class MerchantRepository
     end
   end
 
+  def merchants_with_only_one_item
+    all.find_all do |merchant|
+      merchant.items.count == 1
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
