@@ -184,9 +184,15 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_find_merchants_with_only_one_item
     actual = analyst_2.merchants_with_only_one_item
-
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
     assert_equal 1, actual.sample.items.count
+  end
+
+  def test_it_can_find_merchants_with_only_one_item_registered_in_month
+    actual = analyst_2.merchants_with_only_one_item_registered_in_month('December')
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 12, actual.sample.created_at.month
   end
 end
