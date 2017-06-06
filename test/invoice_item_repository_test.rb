@@ -81,6 +81,6 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
     assert_instance_of Hash, actual
     assert_instance_of Time, random_day_key
-    assert_equal 33402.68, actual[actual.keys.first]
+    assert_equal 590019.60, actual[actual.keys.first]
   end
 end

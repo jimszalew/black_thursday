@@ -49,7 +49,7 @@ class InvoiceItemRepository
   def total_revenue_by_date
     dates = {}
     all.each do |invoice_item|
-      created = (invoice_item.created_at)
+      created = Time.parse(invoice_item.created_at.strftime('%Y-%m-%d'))
       if dates.has_key?(created)
         dates[created] += (invoice_item.unit_price * invoice_item.quantity.to_f)
       else
