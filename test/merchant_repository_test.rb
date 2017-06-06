@@ -115,4 +115,10 @@ class MerchantRepositoryTest < Minitest::Test
     assert_instance_of Merchant, actual.sample
     assert (actual[0].total_revenue > actual[1].total_revenue)
   end
+
+  def test_it_can_find_merchants_with_pending_invoices
+    actual = merch_repo.merchants_with_pending_invoices
+
+    assert actual.sample.pending_invoice?
+  end
 end

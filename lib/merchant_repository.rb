@@ -59,6 +59,12 @@ class MerchantRepository
     all.sort_by { |merchant| merchant.total_revenue }.reverse
   end
 
+  def merchants_with_pending_invoices
+    all.find_all do |merchant|
+      merchant.pending_invoice?
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end
