@@ -24,7 +24,7 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_invoices_automatically
     assert_instance_of InvoiceRepository, invoice_repo
     assert_instance_of Invoice, invoice_repo.invoices[invoice_repo.invoices.keys.sample]
-    assert_equal 20, invoice_repo.invoices.keys.length
+    assert_equal 200, invoice_repo.invoices.keys.length
   end
 
   def test_it_can_add_invoices
@@ -40,7 +40,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_invoice_instances
     actual = invoice_repo.all
-    assert_equal 20, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Invoice, actual.sample
   end
 
@@ -78,7 +78,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 9, actual.length
+    assert_equal 58, actual.length
   end
 
   def test_it_knows_about_parent_sales_engine

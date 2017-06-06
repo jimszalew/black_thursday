@@ -141,11 +141,7 @@ class InvoiceTest < Minitest::Test
                             :created_at => "2005-06-03",
                             :updated_at => "2015-07-01"
                           }, repository)
-                          
-    assert_equal 21067.77, invoice3.total
-  end
 
-  def test_total_returns_nil_if_invoice_not_paid_in_full
-    assert_nil invoice.total
+    assert_equal 21067.77, invoice3.total
   end
 end

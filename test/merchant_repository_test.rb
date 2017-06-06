@@ -110,7 +110,6 @@ class MerchantRepositoryTest < Minitest::Test
 
   def test_it_can_sort_merchants_by_total_revenue
     actual = merch_repo.merchants_by_total_revenue
-    binding.pry
 
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample

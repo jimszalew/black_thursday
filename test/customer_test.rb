@@ -59,6 +59,6 @@ class CustomerTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
-    assert_equal 1, actual.length
+    assert_equal 3, actual.length
   end
 end

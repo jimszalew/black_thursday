@@ -51,32 +51,32 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_sales_engine_items_returns_all_item_instances
-    assert_equal 29, se.items.all.length
+    assert_equal 200, se.items.all.length
     assert_instance_of Item, se.items.all.sample
   end
 
   def test_sales_engine_merchants_returns_all_merchant_instances
-    assert_equal 20, se.merchants.all.length
+    assert_equal 200, se.merchants.all.length
     assert_instance_of Merchant, se.merchants.all.sample
   end
 
   def test_sales_engine_invoices_returns_all_invoice_instances
-    assert_equal 20, se.invoices.all.length
+    assert_equal 200, se.invoices.all.length
     assert_instance_of Invoice, se.invoices.all.sample
   end
 
   def test_sales_engine_invoice_items_returns_all_invoice_item_instances
-    assert_equal 120, se.invoice_items.all.length
+    assert_equal 200, se.invoice_items.all.length
     assert_instance_of InvoiceItem, se.invoice_items.all.sample
   end
 
   def test_sales_engine_transactions_returns_all_transactions_instances
-    assert_equal 120, se.transactions.all.length
+    assert_equal 200, se.transactions.all.length
     assert_instance_of Transaction, se.transactions.all.sample
   end
 
   def test_sales_engine_customers_returns_all_customer_instances
-    assert_equal 120, se.customers.all.length
+    assert_equal 200, se.customers.all.length
     assert_instance_of Customer, se.customers.all.sample
   end
 
@@ -101,7 +101,7 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 2, actual.count
+    assert_equal 3, actual.count
     assert_equal 12335955, actual.sample.merchant_id
   end
 
@@ -113,9 +113,8 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_get_number_of_invoices_by_weekday
-    expected = {"Saturday"=>5, "Friday"=>6, "Wednesday"=>1,
-                "Monday"=>4, "Sunday"=>1, "Tuesday"=>2,
-                "Thursday"=>1}
+    expected = {"Saturday"=>30, "Friday"=>35, "Wednesday"=>20, "Monday"=>26,
+                "Sunday"=>33, "Tuesday"=>33, "Thursday"=>23}
 
     actual = se.invoices_by_weekday
 
@@ -123,7 +122,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_find_number_of_invoices_by_status
-    expected = {pending: 9, shipped: 10, returned: 1}
+    expected = {pending: 58, shipped: 119, returned: 23}
 
     actual = se.invoices_by_status
 
@@ -178,7 +177,7 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
-    assert_equal 1, actual.count
+    assert_equal 3, actual.count
   end
 
   def test_it_can_get_customer_ids_by_merchant_id

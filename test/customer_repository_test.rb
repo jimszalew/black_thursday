@@ -24,7 +24,7 @@ class CustomerRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_customers_automatically
     assert_instance_of CustomerRepository, customer_repo
     assert_instance_of Customer, customer_repo.customers[customer_repo.customers.keys.sample]
-    assert_equal 120, customer_repo.customers.keys.length
+    assert_equal 200, customer_repo.customers.keys.length
   end
 
   def test_it_can_add_customers
@@ -40,7 +40,7 @@ class CustomerRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_customer_instances
     actual = customer_repo.all
-    assert_equal 120, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Customer, actual.sample
   end
 
@@ -82,7 +82,7 @@ class CustomerRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Merchant, actual.sample
-    assert_equal 1, actual.count
+    assert_equal 3, actual.count
   end
 
   def test_it_can_get_matching_customers
