@@ -175,4 +175,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 25, actual.count
     assert_equal 20, other_actual.count
   end
+
+  def test_it_can_get_merchannts_with_pending_invoices
+    actual = analyst_2.merchants_with_pending_invoices
+
+    assert actual.sample.pending_invoice?
+  end
 end

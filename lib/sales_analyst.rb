@@ -124,4 +124,8 @@ class SalesAnalyst
   def top_revenue_earners(range=20)
     engine.merchants.merchants_by_total_revenue[0..(range - 1)]
   end
+
+  def merchants_with_pending_invoices
+    engine.get_merchants_with_pending_invoices
+  end
 end
