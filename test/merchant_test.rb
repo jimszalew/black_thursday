@@ -90,7 +90,6 @@ class MerchantTest < Minitest::Test
   end
 
   def test_it_knows_if_invoices_pending
-    actual = merchant2.invoices
-    assert_equal 44, actual
+    assert merchant2.pending_invoice?
   end
 end

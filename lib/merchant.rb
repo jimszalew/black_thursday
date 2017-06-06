@@ -28,4 +28,10 @@ class Merchant
       sum + invoice.total
     end
   end
+
+  def pending_invoice?
+    invoices.any? do |invoice|
+      invoice.status == :pending
+    end
+  end
 end
