@@ -195,4 +195,10 @@ class SalesAnalystTest < Minitest::Test
     assert_instance_of Merchant, actual.sample
     assert_equal 12, actual.sample.created_at.month
   end
+
+  def test_it_can_get_merchant_total_revenue
+    actual = analyst_2.revenue_by_merchant(12337139)
+
+    assert_equal 24776.52, actual
+  end
 end

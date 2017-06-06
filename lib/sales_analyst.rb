@@ -138,4 +138,8 @@ class SalesAnalyst
       merchant.created_at.strftime('%B') == month
     end
   end
+
+  def revenue_by_merchant(merchant_id)
+    engine.get_merchant_total_revenue(merchant_id)
+  end
 end
