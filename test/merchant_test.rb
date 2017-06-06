@@ -11,7 +11,6 @@ class MerchantTest < Minitest::Test
   attr_reader :merchant,
               :merchant2,
               :merchant3
-              :merchant3
 
   def setup
     csv_paths = {
@@ -25,10 +24,9 @@ class MerchantTest < Minitest::Test
 
     engine = SalesEngine.from_csv(csv_paths)
     repo = engine.merchants
-    @merchant = Merchant.new({:id => 12337139, :name => "StarCityGames"}, repo)
-    @merchant2 = Merchant.new({:id => 12335955, :name => "Amazong"},repo)
-    @merchant3 = Merchant.new({:id => 12334213, :name => "Sal's Sassafras Supply"},repo)
-    @merchant4 = Merchant.new({:id => 12334634, :name => "Mike's Meme Makers"},repo)
+    @merchant = Merchant.new({:id => 12337139, :name => "StarCityGames", :created_at => "2012-03-27"}, repo)
+    @merchant2 = Merchant.new({:id => 12335955, :name => "Amazong", :created_at => "2012-03-27"},repo)
+    @merchant3 = Merchant.new({:id => 12334213, :name => "Sal's Sassafras Supply", :created_at => "2012-03-27"},repo)
   end
 
   def test_it_exists
@@ -42,6 +40,10 @@ class MerchantTest < Minitest::Test
 
   def test_it_has_a_name
     assert_equal "StarCityGames", merchant.name
+  end
+
+  def test_it_knows_when_it_was_created
+    assert_instance_of Time, merchant.created_at
   end
 
   def test_it_can_have_different_id

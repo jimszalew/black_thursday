@@ -1,13 +1,17 @@
 require 'pry'
+require 'time'
 class Merchant
 
   attr_reader :id,
               :name,
-              :repository
+              :repository,
+              :created_at
 
   def initialize(attributes, repository)
     @id   = attributes[:id].to_i
     @name = attributes[:name]
+    @created_at = Time.parse(attributes[:created_at])
+
     @repository = repository
   end
 
