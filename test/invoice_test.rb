@@ -121,27 +121,6 @@ class InvoiceTest < Minitest::Test
   end
 
   def test_it_can_calculate_invoice_total
-    csv_paths = {
-                        :items     => "./data/items.csv",
-                        :merchants => "./data/merchants.csv",
-                        :invoices => "./data/invoices.csv",
-                        :invoice_items => "./data/invoice_items.csv",
-                        :transactions => "./data/transactions.csv",
-                        :customers => "./data/customers.csv"
-                      }
-
-    engine = SalesEngine.from_csv(csv_paths)
-    repository = engine.invoices
-
-    invoice3 = Invoice.new({
-                            :id => "1",
-                            :customer_id => "5",
-                            :merchant_id => "12334112",
-                            :status => "pending",
-                            :created_at => "2005-06-03",
-                            :updated_at => "2015-07-01"
-                          }, repository)
-
-    assert_equal 21067.77, invoice3.total
+    assert_equal 15827.08, invoice2.total
   end
 end

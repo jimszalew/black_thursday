@@ -42,7 +42,7 @@ class Invoice
 
   def is_paid_in_full?
     return false if transactions.empty?
-    transactions.all? do |transaction|
+    transactions.any? do |transaction|
       transaction.result == "success"
     end
   end
