@@ -122,7 +122,7 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_it_can_find_number_of_invoices_by_status
-    expected = {pending: 58, shipped: 119, returned: 23}
+    expected = {pending: 59, shipped: 119, returned: 22}
 
     actual = se.invoices_by_status
 
@@ -209,6 +209,6 @@ class SalesEngineTest < Minitest::Test
 
     assert_instance_of Hash, actual
     assert_instance_of Time, random_day_key
-    assert_equal 33402.68, actual[actual.keys.first]
+    assert_equal 590019.60, actual[actual.keys.first]
   end
 end

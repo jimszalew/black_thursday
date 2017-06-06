@@ -156,14 +156,14 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_knows_percentage_of_invoices_by_status
-    assert_equal 11.5, analyst_2.invoice_status(:returned)
-    assert_equal 29.0, analyst_2.invoice_status(:pending)
+    assert_equal 11.0, analyst_2.invoice_status(:returned)
+    assert_equal 29.5, analyst_2.invoice_status(:pending)
     assert_equal 59.5, analyst_2.invoice_status(:shipped)
   end
 
   def test_it_can_get_total_revenue_by_date
-    date = Time.parse('2012-03-27 14:54:09 UTC')
-    assert_equal 33402.68, analyst_2.total_revenue_by_date(date)
+    date = Time.parse('2012-03-27')
+    assert_equal 590019.60, analyst_2.total_revenue_by_date(date)
   end
 
   def test_it_can_find_top_revenue_earners
