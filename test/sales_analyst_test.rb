@@ -181,4 +181,12 @@ class SalesAnalystTest < Minitest::Test
 
     assert actual.sample.pending_invoice?
   end
+
+  def test_it_can_find_merchants_with_only_one_item
+    actual = analyst_2.merchants_with_only_one_item
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 1, actual.sample.items.count
+  end
 end

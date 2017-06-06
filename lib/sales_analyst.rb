@@ -128,4 +128,8 @@ class SalesAnalyst
   def merchants_with_pending_invoices
     engine.get_merchants_with_pending_invoices
   end
+
+  def merchants_with_only_one_item
+    engine.get_merchants_with_only_one_item
+  end
 end
