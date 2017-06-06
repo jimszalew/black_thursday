@@ -132,4 +132,8 @@ class SalesEngine
   def get_merchants_with_pending_invoices
     merchants.merchants_with_pending_invoices
   end
+
+  def get_merchants_with_only_one_item
+    merchants.merchants_with_only_one_item
+  end
 end
