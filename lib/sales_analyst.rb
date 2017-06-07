@@ -135,7 +135,15 @@ class SalesAnalyst
   end
 
   def merchants_with_pending_invoices
-    engine.get_merchants_with_pending_invoices
+    invoices = engine.invoices.all.find_all do |invoice|
+      !invoice.is_paid_in_full?
+    end
+
+    pending = invoices.map do |invoice|
+      invoice.merchant
+    end
+
+    pending.uniq
   end
 
   def merchants_with_only_one_item
