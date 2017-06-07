@@ -159,4 +159,29 @@ class SalesAnalyst
   def revenue_by_merchant(merchant_id)
     engine.get_merchant_total_revenue(merchant_id)
   end
+
+  def most_sold_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    most_sold_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
+      if quantities.has_key?(invoice_item.quantity.to_f)
+        quantities[invoice_item.quantity.to_f] << engine.items.find_by_id(invoice_item.item_id)
+      else
+        quantities[invoice_item.quantity.to_f] = [engine.items.find_by_id(invoice_item.item_id)]
+      end
+      quantities
+    end
+
+    most_sold_items[most_sold_items.keys.max]
+  end
+
+  def best_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    best_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
+      revenue = invoice_item.quantity.to_f * invoice_item.unit_price
+      quantities[revenue] = engine.items.find_by_id(invoice_item.item_id)
+      quantities
+    end
+
+    best_items[best_items.keys.max]
+  end
 end

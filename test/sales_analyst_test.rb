@@ -184,10 +184,10 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 20, other_actual.count
   end
 
-  def test_it_can_get_merchannts_with_pending_invoices
+  def test_it_can_get_merchants_with_pending_invoices
     actual = analyst_2.merchants_with_pending_invoices
 
-    assert actual.sample.pending_invoice?
+    refute actual.sample.invoices.first.is_paid_in_full?
   end
 
   def test_it_can_find_merchants_with_only_one_item
@@ -208,5 +208,19 @@ class SalesAnalystTest < Minitest::Test
     actual = analyst_2.revenue_by_merchant(12337139)
 
     assert_equal 24776.52, actual
+  end
+
+  def test_it_can_get_most_sold_item_for_merchant
+    actual = analyst_2.most_sold_item_for_merchant(12334123)
+
+    assert_instance_of Item, actual.sample
+    assert_equal 263533612, actual.first.id
+  end
+
+  def test_it_can_get_best_item_for_merchant
+    actual = analyst_2.best_item_for_merchant(12334123)
+
+    assert_instance_of Item, actual
+    assert_equal 263533612, actual.id
   end
 end
