@@ -26,7 +26,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_invoices_items_automatically
     assert_instance_of InvoiceItemRepository, invoice_item_repo
     assert_instance_of InvoiceItem,  invoice_item_repo.invoice_items[invoice_item_repo.invoice_items.keys.sample]
-    assert_equal 120, invoice_item_repo.invoice_items.keys.length
+    assert_equal 200, invoice_item_repo.invoice_items.keys.length
   end
 
   def test_it_can_add_invoice_itemss
@@ -42,7 +42,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_invoice_item_instances
     actual = invoice_item_repo.all
-    assert_equal 120, actual.length
+    assert_equal 200, actual.length
     assert_instance_of InvoiceItem, actual.sample
   end
 
@@ -73,5 +73,14 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
     assert_equal 8, actual.length
+  end
+
+  def test_it_can_calculate_total_revenue_by_date
+    actual = invoice_item_repo.total_revenue_by_date
+    random_day_key = actual.keys.sample
+
+    assert_instance_of Hash, actual
+    assert_instance_of Time, random_day_key
+    assert_equal 590019.60, actual[actual.keys.first]
   end
 end

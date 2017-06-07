@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'time'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 require 'pry'
@@ -15,17 +16,24 @@ class SalesAnalystTest < Minitest::Test
     csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
     engine  = SalesEngine.from_csv(csv_paths)
     @analyst = SalesAnalyst.new(engine)
 
-    medium_csv_paths = {
+    csv_paths = {
                         :items     => "./test/data/medium_item_set.csv",
                         :merchants => "./test/data/medium_merchant_set.csv",
-                        :invoices => "./test/data/medium_invoice_set.csv"
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine_2  = SalesEngine.from_csv(medium_csv_paths)
+
+    engine_2 = SalesEngine.from_csv(csv_paths)
     @analyst_2 = SalesAnalyst.new(engine_2)
   end
 
@@ -36,11 +44,11 @@ class SalesAnalystTest < Minitest::Test
 
   def test_it_can_find_average_items_per_merchant
     assert_equal 1.2, analyst.average_items_per_merchant
-    assert_equal 1.45, analyst_2.average_items_per_merchant
+    assert_equal 1.0, analyst_2.average_items_per_merchant
   end
 
   def test_it_can_calculate_standard_deviation_for_average_items_per_merchant
-    assert_equal 1.39, analyst_2.average_items_per_merchant_standard_deviation
+    assert_equal 1.91, analyst_2.average_items_per_merchant_standard_deviation
   end
 
   def test_it_knows_merchants_with_high_item_count
@@ -61,7 +69,7 @@ class SalesAnalystTest < Minitest::Test
     actual = analyst_2.average_average_price_per_merchant
 
     assert_instance_of BigDecimal, actual
-    assert_equal 6.66, actual
+    assert_equal 565.18, actual.to_f
   end
 
   def test_it_can_find_golden_items
@@ -77,27 +85,31 @@ class SalesAnalystTest < Minitest::Test
     actual = analyst_2.average_item_price
 
     assert_instance_of BigDecimal, actual
-    assert_equal 183.20, actual
+    assert_equal 648.18, actual.to_f
   end
 
   def test_it_knows_standard_deviation_of_average_average_item_price
-    assert_equal 236.68, analyst_2.average_item_price_standard_deviation
+    assert_equal 7069.43, analyst_2.average_item_price_standard_deviation
   end
 
   def test_it_can_find_average_invoices_per_merchant
-    assert_equal 4.0, analyst.average_invoices_per_merchant
+    assert_equal 40.0, analyst.average_invoices_per_merchant
     assert_equal 1.0, analyst_2.average_invoices_per_merchant
   end
 
   def test_it_can_calculate_standard_deviation_for_average_invoice_per_merchant
-    assert_equal 1.0, analyst_2.average_invoices_per_merchant_standard_deviation
+    assert_equal 0.86, analyst_2.average_invoices_per_merchant_standard_deviation
   end
 
   def test_it_knows_merchants_with_high_invoice_count
+    skip
     csv_paths = {
                         :items     => "./data/items.csv",
                         :merchants => "./data/merchants.csv",
-                        :invoices => "./data/invoices.csv"
+                        :invoices => "./data/invoices.csv",
+                        :invoice_items => "./data/invoice_items.csv",
+                        :transactions => "./data/transactions.csv",
+                        :customers => "./data/customers.csv"
                       }
     engine = SalesEngine.from_csv(csv_paths)
     analyst_2 = SalesAnalyst.new(engine)
@@ -109,10 +121,14 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_knows_merchants_with_low_invoice_count
+    skip
     csv_paths = {
                         :items     => "./data/items.csv",
                         :merchants => "./data/merchants.csv",
-                        :invoices => "./data/invoices.csv"
+                        :invoices => "./data/invoices.csv",
+                        :invoice_items => "./data/invoice_items.csv",
+                        :transactions => "./data/transactions.csv",
+                        :customers => "./data/customers.csv"
                       }
     engine = SalesEngine.from_csv(csv_paths)
     analyst_2 = SalesAnalyst.new(engine)
@@ -124,11 +140,11 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_can_calculate_average_invoices_per_day
-    assert_equal 2.86, analyst_2.average_invoices_per_day
+    assert_equal 28.57, analyst_2.average_invoices_per_day
   end
 
   def test_it_can_find_standard_deviation_of_invoices_created_per_day
-    assert_equal 2.12, analyst_2.invoices_per_day_standard_deviation
+    assert_equal 5.68, analyst_2.invoices_per_day_standard_deviation
   end
 
   def test_it_can_find_top_days_by_invoice_count
@@ -136,12 +152,75 @@ class SalesAnalystTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of String, actual.sample
-    assert_equal 2, actual.count
+    assert_equal 1, actual.count
   end
 
   def test_it_knows_percentage_of_invoices_by_status
-    assert_equal 5.0, analyst_2.invoice_status(:returned)
-    assert_equal 45.0, analyst_2.invoice_status(:pending)
-    assert_equal 50.0, analyst_2.invoice_status(:shipped)
+    assert_equal 11.0, analyst_2.invoice_status(:returned)
+    assert_equal 29.5, analyst_2.invoice_status(:pending)
+    assert_equal 59.5, analyst_2.invoice_status(:shipped)
+  end
+
+  def test_it_can_get_total_revenue_by_date
+    date = Time.parse("2009-02-07")
+    assert_equal 21067.77, analyst_2.total_revenue_by_date(date)
+  end
+
+  def test_it_get_merchants_ranked_by_revenue
+    actual = analyst_2.merchants_ranked_by_revenue
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert (actual[0].total_revenue > actual[1].total_revenue)
+  end
+
+  def test_it_can_find_top_revenue_earners
+    actual = analyst_2.top_revenue_earners(25)
+    other_actual = analyst_2.top_revenue_earners
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 25, actual.count
+    assert_equal 20, other_actual.count
+  end
+
+  def test_it_can_get_merchants_with_pending_invoices
+    actual = analyst_2.merchants_with_pending_invoices
+
+    refute actual.sample.invoices.first.is_paid_in_full?
+  end
+
+  def test_it_can_find_merchants_with_only_one_item
+    actual = analyst_2.merchants_with_only_one_item
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 1, actual.sample.items.count
+  end
+
+  def test_it_can_find_merchants_with_only_one_item_registered_in_month
+    actual = analyst_2.merchants_with_only_one_item_registered_in_month('December')
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert_equal 12, actual.sample.created_at.month
+  end
+
+  def test_it_can_get_merchant_total_revenue
+    actual = analyst_2.revenue_by_merchant(12337139)
+
+    assert_equal 24776.52, actual
+  end
+
+  def test_it_can_get_most_sold_item_for_merchant
+    actual = analyst_2.most_sold_item_for_merchant(12334123)
+
+    assert_instance_of Item, actual.sample
+    assert_equal 263533612, actual.first.id
+  end
+
+  def test_it_can_get_best_item_for_merchant
+    actual = analyst_2.best_item_for_merchant(12334123)
+
+    assert_instance_of Item, actual
+    assert_equal 263533612, actual.id
   end
 end

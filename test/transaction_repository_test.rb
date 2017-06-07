@@ -25,7 +25,7 @@ class TransactionRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_transactions_automatically
     assert_instance_of TransactionRepository, transaction_repo
     assert_instance_of Transaction, transaction_repo.transactions[transaction_repo.transactions.keys.sample]
-    assert_equal 120, transaction_repo.transactions.keys.length
+    assert_equal 200, transaction_repo.transactions.keys.length
   end
 
   def test_it_can_add_transactions
@@ -41,7 +41,7 @@ class TransactionRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_transaction_instances
     actual = transaction_repo.all
-    assert_equal 120, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Transaction, actual.sample
   end
 
@@ -66,7 +66,7 @@ class TransactionRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_all_transactions_by_cc_num
-    actual = transaction_repo.find_all_by_credit_card_number("4613250127567219")
+    actual = transaction_repo.find_all_by_credit_card_number(4613250127567219)
 
     assert_instance_of Array, actual
     assert_instance_of Transaction, actual.sample
@@ -79,7 +79,7 @@ class TransactionRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Transaction, actual.sample
-    assert_equal 95, actual.length
+    assert_equal 162, actual.length
     assert transaction_repo.find_all_by_result("successful").empty?
   end
 

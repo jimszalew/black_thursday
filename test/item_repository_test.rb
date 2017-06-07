@@ -25,7 +25,7 @@ class ItemRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_items_automatically
     assert_instance_of ItemRepository, item_repo
     assert_instance_of Item, item_repo.items[item_repo.items.keys.sample]
-    assert_equal 29, item_repo.items.keys.length
+    assert_equal 200, item_repo.items.keys.length
   end
 
   def test_it_can_add_items
@@ -42,7 +42,7 @@ class ItemRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_item_instances
     actual = item_repo.all
-    assert_equal 29, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Item, actual.sample
   end
 
@@ -70,7 +70,7 @@ class ItemRepositoryTest < Minitest::Test
     actual = item_repo.find_all_with_description('Handmade')
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
-    assert_equal 7, actual.length
+    assert_equal 32, actual.length
   end
 
   def test_it_returns_empty_array_for_silly_string
@@ -92,7 +92,7 @@ class ItemRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Item, actual.sample
-    assert_equal 18, actual.length
+    assert_equal 136, actual.length
   end
 
   def test_it_can_find_all_items_by_merch_id

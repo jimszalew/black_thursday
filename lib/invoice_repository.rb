@@ -42,6 +42,12 @@ class InvoiceRepository
     end
   end
 
+  def find_all_by_date(date)
+    all.find_all do |invoice|
+      invoice.created_at == date
+    end
+  end
+
   def merchant_by_invoice(merchant_id)
     engine.merchant_by_invoice(merchant_id)
   end

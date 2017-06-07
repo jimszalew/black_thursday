@@ -10,13 +10,17 @@ class ItemTest < Minitest::Test
   attr_reader :item,
               :repo
   def setup
-    small_csv_paths = {
+    csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
-                        :merchants => "./test/data/merchant_sample.csv",
+                        :merchants => "./test/data/medium_merchant_set.csv",
+                        :invoices => "./test/data/medium_invoice_set.csv",
+                        :invoice_items => "./test/data/medium_invoice_item_set.csv",
+                        :transactions => "./test/data/medium_transaction_set.csv",
+                        :customers => "./test/data/medium_customer_set.csv"
                       }
-    engine = SalesEngine.from_csv(small_csv_paths)
-    csv  = CSV.open './test/data/small_item_set.csv', headers: true, header_converters: :symbol
-    @repo = ItemRepository.new(csv, engine)
+
+    engine = SalesEngine.from_csv(csv_paths)
+    repo = engine.items
 
     @item = Item.new({
       :name        => "Pencil",

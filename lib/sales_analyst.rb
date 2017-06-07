@@ -116,4 +116,72 @@ class SalesAnalyst
      percentage = (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
      percentage.round(2)
   end
+
+  def total_revenue_by_date(date)
+    invoices = engine.invoices.find_all_by_date(date)
+
+    invoices.reduce(0) do |sum, invoice|
+      sum + invoice.total
+    end
+  end
+
+
+  def merchants_ranked_by_revenue
+    engine.merchants.merchants_by_total_revenue
+  end
+
+  def top_revenue_earners(range=20)
+    engine.merchants.merchants_by_total_revenue[0..(range - 1)]
+  end
+
+  def merchants_with_pending_invoices
+    invoices = engine.invoices.all.find_all do |invoice|
+      !invoice.is_paid_in_full?
+    end
+
+    pending = invoices.map do |invoice|
+      invoice.merchant
+    end
+
+    pending.uniq
+  end
+
+  def merchants_with_only_one_item
+    engine.get_merchants_with_only_one_item
+  end
+
+  def merchants_with_only_one_item_registered_in_month(month)
+    merchants_with_only_one_item.find_all do |merchant|
+      merchant.created_at.strftime('%B') == month
+    end
+  end
+
+  def revenue_by_merchant(merchant_id)
+    engine.get_merchant_total_revenue(merchant_id)
+  end
+
+  def most_sold_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    most_sold_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
+      if quantities.has_key?(invoice_item.quantity.to_f)
+        quantities[invoice_item.quantity.to_f] << engine.items.find_by_id(invoice_item.item_id)
+      else
+        quantities[invoice_item.quantity.to_f] = [engine.items.find_by_id(invoice_item.item_id)]
+      end
+      quantities
+    end
+
+    most_sold_items[most_sold_items.keys.max]
+  end
+
+  def best_item_for_merchant(merchant_id)
+    merchant = engine.merchants.find_by_id(merchant_id)
+    best_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
+      revenue = invoice_item.quantity.to_f * invoice_item.unit_price
+      quantities[revenue] = engine.items.find_by_id(invoice_item.item_id)
+      quantities
+    end
+
+    best_items[best_items.keys.max]
+  end
 end

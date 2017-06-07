@@ -55,6 +55,22 @@ class MerchantRepository
     engine.get_customers_by_merchant_id(merchant_id)
   end
 
+  def merchants_by_total_revenue
+    all.sort_by { |merchant| merchant.total_revenue }.reverse
+  end
+
+  def merchants_with_pending_invoices
+    all.find_all do |merchant|
+      merchant.pending_invoice?
+    end
+  end
+
+  def merchants_with_only_one_item
+    all.find_all do |merchant|
+      merchant.items.count == 1
+    end
+  end
+
   def inspect
     "#<#{self.class} #{@merchants.size} rows>"
   end

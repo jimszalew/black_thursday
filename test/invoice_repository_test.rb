@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'csv'
+require 'time'
 require_relative '../lib/invoice_repository'
 require_relative "../lib/sales_engine"
 
@@ -24,7 +25,7 @@ class InvoiceRepositoryTest < Minitest::Test
   def test_it_exists_and_populates_invoices_automatically
     assert_instance_of InvoiceRepository, invoice_repo
     assert_instance_of Invoice, invoice_repo.invoices[invoice_repo.invoices.keys.sample]
-    assert_equal 20, invoice_repo.invoices.keys.length
+    assert_equal 200, invoice_repo.invoices.keys.length
   end
 
   def test_it_can_add_invoices
@@ -40,7 +41,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_it_can_return_all_invoice_instances
     actual = invoice_repo.all
-    assert_equal 20, actual.length
+    assert_equal 200, actual.length
     assert_instance_of Invoice, actual.sample
   end
 
@@ -78,7 +79,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of Invoice, actual.sample
-    assert_equal 9, actual.length
+    assert_equal 59, actual.length
   end
 
   def test_it_knows_about_parent_sales_engine
@@ -135,5 +136,13 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
     assert_equal 8, actual.count
+  end
+
+  def test_it_can_find_all_by_date
+    date = Time.parse("2009-02-07")
+    actual = invoice_repo.find_all_by_date(date)
+
+    assert_instance_of Invoice, actual.sample
+    assert_equal 1, actual.count
   end
 end

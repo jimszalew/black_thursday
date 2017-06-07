@@ -124,4 +124,20 @@ class SalesEngine
   def get_invoice_items_by_invoice(invoice_id)
     invoice_items.find_all_by_invoice_id(invoice_id)
   end
+
+  def get_total_revenue_by_date
+    invoice_items.total_revenue_by_date
+  end
+
+  def get_merchants_with_pending_invoices
+    merchants.merchants_with_pending_invoices
+  end
+
+  def get_merchants_with_only_one_item
+    merchants.merchants_with_only_one_item
+  end
+
+  def get_merchant_total_revenue(merchant_id)
+    merchants.find_by_id(merchant_id).total_revenue
+  end
 end
