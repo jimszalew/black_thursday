@@ -23,6 +23,12 @@ class Merchant
     repository.all_merchant_invoices(id)
   end
 
+  def invoice_items
+    invoices.map do |invoice|
+      invoice.invoice_items
+    end.flatten
+  end
+
   def customers
     repository.get_customers_by_merchant_id(id)
   end

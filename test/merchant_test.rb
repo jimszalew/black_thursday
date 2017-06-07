@@ -94,4 +94,11 @@ class MerchantTest < Minitest::Test
   def test_it_knows_if_invoices_pending
     assert merchant2.pending_invoice?
   end
+
+  def test_it_can_get_all_invoice_items
+    actual = merchant.invoice_items
+
+    assert_instance_of Array, actual
+    assert_instance_of InvoiceItem, actual.sample
+  end
 end
