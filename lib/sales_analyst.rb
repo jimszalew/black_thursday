@@ -119,10 +119,15 @@ class SalesAnalyst
 
   def total_revenue_by_date(date)
     invoices = engine.invoices.find_all_by_date(date)
-    
+
     invoices.reduce(0) do |sum, invoice|
       sum + invoice.total
     end
+  end
+
+
+  def merchants_ranked_by_revenue
+    engine.merchants.merchants_by_total_revenue
   end
 
   def top_revenue_earners(range=20)

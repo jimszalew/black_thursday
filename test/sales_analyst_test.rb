@@ -166,6 +166,14 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 21067.77, analyst_2.total_revenue_by_date(date)
   end
 
+  def test_it_get_merchants_ranked_by_revenue
+    actual = analyst_2.merchants_ranked_by_revenue
+
+    assert_instance_of Array, actual
+    assert_instance_of Merchant, actual.sample
+    assert (actual[0].total_revenue > actual[1].total_revenue)
+  end
+
   def test_it_can_find_top_revenue_earners
     actual = analyst_2.top_revenue_earners(25)
     other_actual = analyst_2.top_revenue_earners
