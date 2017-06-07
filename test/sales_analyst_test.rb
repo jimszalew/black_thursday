@@ -102,7 +102,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_knows_merchants_with_high_invoice_count
-    skip
     csv_paths = {
                         :items     => "./data/items.csv",
                         :merchants => "./data/merchants.csv",
@@ -121,7 +120,6 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_it_knows_merchants_with_low_invoice_count
-    skip
     csv_paths = {
                         :items     => "./data/items.csv",
                         :merchants => "./data/merchants.csv",

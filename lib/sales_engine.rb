@@ -14,36 +14,39 @@ class SalesEngine
               :transactions,
               :customers
 
-  def initialize(item_rows, merchant_rows, invoice_rows, invoice_item_rows, transaction_rows, customer_rows)
-    @items     = ItemRepository.new(item_rows, self)
-    @merchants = MerchantRepository.new(merchant_rows, self)
-    @invoices = InvoiceRepository.new(invoice_rows, self)
-    @invoice_items = InvoiceItemRepository.new(invoice_item_rows, self)
-    @transactions = TransactionRepository.new(transaction_rows, self)
-    @customers = CustomerRepository.new(customer_rows, self)
-
+  def initialize(item, merchant, invoice, invoice_item, transaction, customer)
+    @items     = ItemRepository.new(item, self)
+    @merchants = MerchantRepository.new(merchant, self)
+    @invoices = InvoiceRepository.new(invoice, self)
+    @invoice_items = InvoiceItemRepository.new(invoice_item, self)
+    @transactions = TransactionRepository.new(transaction, self)
+    @customers = CustomerRepository.new(customer, self)
   end
 
   def self.from_csv(paths)
-    item_path  = paths[:items]
-    merch_path = paths[:merchants]
-    invoice_path = paths[:invoices]
-    invoice_item_path = paths[:invoice_items]
-    transactions_path = paths[:transactions]
-    customers_path = paths[:customers]
+    item_loc  = paths[:items]
+    merch_loc = paths[:merchants]
+    invoice_loc = paths[:invoices]
+    inv_item_loc = paths[:invoice_items]
+    transacs_loc = paths[:transactions]
+    customers_loc = paths[:customers]
 
-    item_data  = CSV.open item_path, headers: true, header_converters: :symbol
-    merch_data = CSV.open merch_path, headers: true, header_converters: :symbol
-    invoice_data = CSV.open invoice_path, headers: true, header_converters: :symbol
-    invoice_items_data = CSV.open invoice_item_path, headers: true, header_converters: :symbol
-    transactions_data = CSV.open transactions_path, headers: true, header_converters: :symbol
-    customer_data = CSV.open customers_path, headers: true, header_converters: :symbol
+    item  = CSV.open item_loc, headers: true, header_converters: :symbol
+    merch = CSV.open merch_loc, headers: true, header_converters: :symbol
+    invoice = CSV.open invoice_loc, headers: true, header_converters: :symbol
+    inv_items = CSV.open inv_item_loc, headers: true, header_converters: :symbol
+    transacs = CSV.open transacs_loc, headers: true, header_converters: :symbol
+    customer = CSV.open customers_loc, headers: true, header_converters: :symbol
 
-    SalesEngine.new(item_data, merch_data, invoice_data, invoice_items_data, transactions_data, customer_data)
+    SalesEngine.new(item, merch, invoice, inv_items, transacs, customer)
   end
 
   def all_merchant_items(merchant_id)
     items.find_all_by_merchant_id(merchant_id)
+  end
+
+  def find_merchant_by_id(merchant_id)
+    merchants.find_by_id(merchant_id)
   end
 
   def merchant_by_item(merchant_id)
@@ -56,6 +59,10 @@ class SalesEngine
 
   def merchant_by_invoice(merchant_id)
     merchants.find_by_id(merchant_id.to_s)
+  end
+
+  def find_item_by_id(item_id)
+    items.find_by_id(item_id)
   end
 
   def invoices_by_weekday
@@ -125,19 +132,15 @@ class SalesEngine
     invoice_items.find_all_by_invoice_id(invoice_id)
   end
 
-  def get_total_revenue_by_date
-    invoice_items.total_revenue_by_date
-  end
-
-  def get_merchants_with_pending_invoices
-    merchants.merchants_with_pending_invoices
-  end
-
   def get_merchants_with_only_one_item
     merchants.merchants_with_only_one_item
   end
 
   def get_merchant_total_revenue(merchant_id)
     merchants.find_by_id(merchant_id).total_revenue
+  end
+
+  def merchants_by_total_revenue
+    merchants.merchants_by_total_revenue
   end
 end

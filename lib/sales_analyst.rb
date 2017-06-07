@@ -113,8 +113,9 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-     percentage = (engine.invoices_by_status[status].to_f / engine.invoices.all.count) * 100.0
-     percentage.round(2)
+    all_invoices = engine.invoices.all.count
+    percentage = (engine.invoices_by_status[status].to_f / all_invoices) * 100.0
+    percentage.round(2)
   end
 
   def total_revenue_by_date(date)
@@ -127,11 +128,11 @@ class SalesAnalyst
 
 
   def merchants_ranked_by_revenue
-    engine.merchants.merchants_by_total_revenue
+    engine.merchants_by_total_revenue
   end
 
   def top_revenue_earners(range=20)
-    engine.merchants.merchants_by_total_revenue[0..(range - 1)]
+    engine.merchants_by_total_revenue[0..(range - 1)]
   end
 
   def merchants_with_pending_invoices
@@ -161,24 +162,25 @@ class SalesAnalyst
   end
 
   def most_sold_item_for_merchant(merchant_id)
-    merchant = engine.merchants.find_by_id(merchant_id)
-    most_sold_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
-      if quantities.has_key?(invoice_item.quantity.to_f)
-        quantities[invoice_item.quantity.to_f] << engine.items.find_by_id(invoice_item.item_id)
+    merch = engine.find_merchant_by_id(merchant_id)
+    most_sold = merch.invoice_items.reduce({}) do |quantities, inv_item|
+      quantity = inv_item.quantity.to_f
+      if quantities.has_key?(quantity)
+        quantities[quantity] << engine.find_item_by_id(inv_item.item_id)
       else
-        quantities[invoice_item.quantity.to_f] = [engine.items.find_by_id(invoice_item.item_id)]
+        quantities[quantity] = [engine.find_item_by_id(inv_item.item_id)]
       end
       quantities
     end
 
-    most_sold_items[most_sold_items.keys.max]
+    most_sold[most_sold.keys.max]
   end
 
   def best_item_for_merchant(merchant_id)
-    merchant = engine.merchants.find_by_id(merchant_id)
-    best_items = merchant.invoice_items.reduce(Hash.new) do |quantities, invoice_item|
-      revenue = invoice_item.quantity.to_f * invoice_item.unit_price
-      quantities[revenue] = engine.items.find_by_id(invoice_item.item_id)
+    merchant = engine.find_merchant_by_id(merchant_id)
+    best_items = merchant.invoice_items.reduce({}) do |quantities, inv_item|
+      revenue = inv_item.quantity.to_f * inv_item.unit_price
+      quantities[revenue] = engine.find_item_by_id(inv_item.item_id)
       quantities
     end
 

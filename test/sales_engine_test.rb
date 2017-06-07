@@ -203,21 +203,6 @@ class SalesEngineTest < Minitest::Test
     assert_equal 8, actual.count
   end
 
-  def test_it_can_get_total_revenue_by_date_from_invoice_items
-    actual = se.get_total_revenue_by_date
-    random_day_key = actual.keys.sample
-
-    assert_instance_of Hash, actual
-    assert_instance_of Time, random_day_key
-    assert_equal 590019.60, actual[actual.keys.first]
-  end
-
-  def test_it_can_get_merchannts_with_pending_invoices
-    actual = se.get_merchants_with_pending_invoices
-
-    assert actual.sample.pending_invoice?
-  end
-
   def test_it_can_get_merchants_with_only_one_item
     actual = se.get_merchants_with_only_one_item
 

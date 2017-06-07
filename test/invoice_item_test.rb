@@ -48,7 +48,7 @@ class InvoiceItemTest < Minitest::Test
   end
 
   def test_it_knows_quantity
-    assert_equal '5', invoice_item.quantity
+    assert_equal 5, invoice_item.quantity
   end
 
   def test_it_has_a_unit_price

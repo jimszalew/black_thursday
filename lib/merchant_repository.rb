@@ -34,7 +34,9 @@ class MerchantRepository
   end
 
   def find_all_by_name(name_frag)
-    all.find_all { |merchant| merchant.name.downcase.include?(name_frag.downcase)}
+    all.find_all do |merchant|
+      merchant.name.downcase.include?(name_frag.downcase)
+    end
   end
 
   def all_merchant_items(merchant_id)
