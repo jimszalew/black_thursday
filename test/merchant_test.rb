@@ -10,7 +10,8 @@ class MerchantTest < Minitest::Test
 
   attr_reader :merchant,
               :merchant2,
-              :merchant3
+              :merchant3,
+              :merchant4
 
   def setup
     csv_paths = {
@@ -27,6 +28,7 @@ class MerchantTest < Minitest::Test
     @merchant = Merchant.new({:id => 12337139, :name => "StarCityGames", :created_at => "2012-03-27"}, repo)
     @merchant2 = Merchant.new({:id => 12335955, :name => "Amazong", :created_at => "2012-03-27"},repo)
     @merchant3 = Merchant.new({:id => 12334213, :name => "Sal's Sassafras Supply", :created_at => "2012-03-27"},repo)
+    @merchant4 = Merchant.new({:id => 12334123, :name => "Stuff.io", :created_at => "2012-03-27"},repo)
   end
 
   def test_it_exists
@@ -100,5 +102,13 @@ class MerchantTest < Minitest::Test
 
     assert_instance_of Array, actual
     assert_instance_of InvoiceItem, actual.sample
+  end
+
+  def test_it_can_find_paid_invoices
+    actual = merchant4.paid_invoices
+
+    assert_instance_of Array, actual
+    assert_instance_of Invoice, actual.sample
+    assert actual.sample.is_paid_in_full?
   end
 end

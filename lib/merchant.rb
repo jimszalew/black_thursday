@@ -23,8 +23,14 @@ class Merchant
     repository.all_merchant_invoices(id)
   end
 
+  def paid_invoices
+    invoices.find_all do |invoice|
+      invoice.is_paid_in_full?
+    end
+  end
+
   def invoice_items
-    invoices.map do |invoice|
+    paid_invoices.map do |invoice|
       invoice.invoice_items
     end.flatten
   end
