@@ -66,27 +66,25 @@ class SalesEngine
   end
 
   def invoices_by_weekday
-    days = {}
-    invoices.all.each do |invoice|
+    invoices.all.reduce({}) do |days, invoice|
       if days.has_key?(invoice.created_at.strftime('%A'))
         days[invoice.created_at.strftime('%A')] += 1
       else
         days[invoice.created_at.strftime('%A')] = 1
       end
+      days
     end
-    days
   end
 
   def invoices_by_status
-    status = {}
-    invoices.all.each do |invoice|
+    invoices.all.reduce({}) do |status, invoice|
       if status.has_key?(invoice.status.to_sym)
         status[invoice.status.to_sym] += 1
       else
         status[invoice.status.to_sym] = 1
       end
+      status
     end
-    status
   end
 
   def item_ids_by_invoice_id(invoice_id)
