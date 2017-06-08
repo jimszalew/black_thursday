@@ -1,9 +1,6 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require 'time'
+require_relative 'test_helper'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
-require 'pry'
 
 class SalesAnalystTest < Minitest::Test
 
@@ -11,8 +8,6 @@ class SalesAnalystTest < Minitest::Test
               :analyst_2
 
   def setup
-    # item_dummy = CSV.open './test/data/small_item_set.csv', headers: true, header_converters: :symbol
-    # merch_dummy = CSV.open './test/data/merchant_sample.csv', headers: true, header_converters: :symbol
     csv_paths = {
                         :items     => "./test/data/small_item_set.csv",
                         :merchants => "./test/data/merchant_sample.csv",
