@@ -164,7 +164,7 @@ class SalesAnalyst
   def most_sold_item_for_merchant(merchant_id)
     merch = engine.find_merchant_by_id(merchant_id)
     most_sold = merch.invoice_items.reduce({}) do |quantities, inv_item|
-      quantity = inv_item.quantity.to_f
+      quantity = inv_item.quantity
       if quantities.has_key?(quantity)
         quantities[quantity] << engine.find_item_by_id(inv_item.item_id)
       else
@@ -179,7 +179,7 @@ class SalesAnalyst
   def best_item_for_merchant(merchant_id)
     merchant = engine.find_merchant_by_id(merchant_id)
     best_items = merchant.invoice_items.reduce({}) do |quantities, inv_item|
-      revenue = inv_item.quantity.to_f * inv_item.unit_price
+      revenue = inv_item.quantity * inv_item.unit_price
       quantities[revenue] = engine.find_item_by_id(inv_item.item_id)
       quantities
     end

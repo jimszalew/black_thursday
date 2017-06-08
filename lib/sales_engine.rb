@@ -50,7 +50,7 @@ class SalesEngine
   end
 
   def merchant_by_item(merchant_id)
-    merchants.find_by_id(merchant_id.to_s)
+    merchants.find_by_id(merchant_id)
   end
 
   def all_merchant_invoices(merchant_id)
@@ -58,7 +58,7 @@ class SalesEngine
   end
 
   def merchant_by_invoice(merchant_id)
-    merchants.find_by_id(merchant_id.to_s)
+    merchants.find_by_id(merchant_id)
   end
 
   def find_item_by_id(item_id)

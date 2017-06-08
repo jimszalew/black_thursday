@@ -17,7 +17,7 @@ class MerchantRepository
   def add(csv)
     csv.each do |row|
       stuff = row.to_h
-      merchants[stuff[:id]] = Merchant.new(stuff, self)
+      merchants[stuff[:id].to_i] = Merchant.new(stuff, self)
     end
   end
 
@@ -26,7 +26,7 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    merchants[id.to_s]
+    merchants[id]
   end
 
   def find_by_name(name)

@@ -44,7 +44,7 @@ class MerchantRepositoryTest < Minitest::Test
   end
 
   def test_it_can_find_merchants_by_id
-    assert_instance_of Merchant, merch_repo.find_by_id("12334105")
+    assert_instance_of Merchant, merch_repo.find_by_id(12334105)
   end
 
   def test_it_returns_nil_for_invalid_id
